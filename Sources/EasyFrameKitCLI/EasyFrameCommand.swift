@@ -70,7 +70,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             framedScreenshots: framedScreenshots
         )
 
-        let view = SampleStoreScreenshotView.makeView(layout: layout, content: content)
+        let view = SampleStoreScreenshotView(layout: layout, content: content)
         let viewWithEnvironment = view
             .environment(\.layoutDirection, isRTL ? .rightToLeft : .leftToRight)
             .environment(\.locale, Locale(identifier: locale))
@@ -172,7 +172,6 @@ protocol StoreScreenshotView: View {
 
     var layout: Layout { get }
     var content: Content { get }
-    static func makeView(layout: Layout, content: Content) -> Self
 }
 
 protocol LayoutProviderOption: CaseIterable, RawRepresentable where RawValue == String {

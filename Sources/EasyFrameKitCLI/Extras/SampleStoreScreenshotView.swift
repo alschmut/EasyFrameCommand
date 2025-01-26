@@ -6,10 +6,6 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
     let layout: SampleLayout
     let content: SampleContent
 
-    static func makeView(layout: SampleLayout, content: SampleContent) -> Self {
-        Self(layout: layout, content: content)
-    }
-
     var body: some View {
         ZStack {
             layout.backgroundColor
@@ -34,7 +30,7 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
                     .lineLimit(nil)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(self.layout.textInsets)
+            .padding(layout.textInsets)
         }
     }
 }
