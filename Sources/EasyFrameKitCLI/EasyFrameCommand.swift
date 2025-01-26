@@ -3,8 +3,7 @@ import SwiftUI
 import FrameKit
 import ArgumentParser
 
-EasyFrameCommand.main()
-
+@main
 struct EasyFrameCommand: ParsableCommand {
     static var configuration: CommandConfiguration {
         CommandConfiguration(commandName: "easy-frame")
