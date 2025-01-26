@@ -18,8 +18,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
     @Option(name: .shortAndLong, help: "A target locale's identifier to be used to adjust layout within view")
     var locale: String
 
-    @Option(name: .shortAndLong, help: "A string to be shown with bold font")
-    var keyword: String
+    @Option(name: .shortAndLong, help: "A title to be shown with bold font")
+    var title: String
 
     @Option(
         name: .shortAndLong,
@@ -66,7 +66,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let backgroundImage: Image? = if let backgroundImage { Image(nsImage: try nsImage(fromPath: backgroundImage)) } else { nil }
         let content = SampleContent(
             locale: Locale(identifier: locale),
-            keyword: keyword,
+            title: title,
             backgroundImage: backgroundImage,
             framedScreenshots: framedScreenshots
         )

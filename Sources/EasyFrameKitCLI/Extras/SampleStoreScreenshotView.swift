@@ -27,7 +27,7 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
                 .padding(layout.imageInsets)
 
             VStack(alignment: .leading, spacing: layout.textGap) {
-                Text(content.keyword)
+                Text(content.title)
                     .font(keywordFont)
                     .foregroundColor(layout.textColor)
                     .multilineTextAlignment(.leading)

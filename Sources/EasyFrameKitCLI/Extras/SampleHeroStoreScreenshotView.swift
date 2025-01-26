@@ -46,7 +46,7 @@ struct SampleHeroStoreScreenshotView: StoreScreenshotView {
                 .padding(self.layout.imageInsets)
             }
 
-            Text(content.keyword)
+            Text(content.title)
                 .font(keywordFont)
                 .foregroundColor(self.layout.textColor)
                 .multilineTextAlignment(.leading)
