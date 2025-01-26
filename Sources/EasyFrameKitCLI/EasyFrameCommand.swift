@@ -51,16 +51,15 @@ struct EasyFrameCommand: ParsableCommand {
 
     @Option(
         name: .shortAndLong,
+        parsing: .remaining,
         help: "An absolute or relative path to the image to be shown as the embeded screenshot within a device frame",
         completion: .file()
     )
     var screenshots: [String] = []
 
     mutating func run() throws {
-        let layoutDirection: LayoutDirection = isRTL ? .rightToLeft : .leftToRight
         let layout = layout.value
 
-        // Device frame's image needs to be generted separaratedly to make framing logic easy
         let framedScreenshots = try screenshots.compactMap({ screenshot in
             try DeviceFrame.makeImage(
                 screenshot: absolutePath(screenshot),
@@ -77,11 +76,14 @@ struct EasyFrameCommand: ParsableCommand {
             framedScreenshots: framedScreenshots
         )
 
-        let render = StoreScreenshotRenderer(outputPath: output, layoutDirection: layoutDirection)
+        let renderer = StoreScreenshotRenderer(
+            outputPath: output,
+            layoutDirection: isRTL ? .rightToLeft : .leftToRight
+        )
         if isHero {
-            try render(SampleHeroStoreScreenshotView.makeView(layout: layout, content: content))
+            try renderer(SampleHeroStoreScreenshotView.makeView(layout: layout, content: content))
         } else {
-            try render(SampleStoreScreenshotView.makeView(layout: layout, content: content))
+            try renderer(SampleStoreScreenshotView.makeView(layout: layout, content: content))
         }
     }
 }
