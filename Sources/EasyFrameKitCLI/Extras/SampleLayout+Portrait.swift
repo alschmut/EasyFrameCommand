@@ -2,10 +2,22 @@ import SwiftUI
 import FrameKit
 
 extension SampleLayout {
-    static let defaultBackgroundColor = Color(red: 255 / 255, green: 153 / 255, blue: 51 / 255)
+    static let defaultBackgroundColor = Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
 
     static let iPhone65 = Self(
         size: CGSize(width: 1242, height: 2688),
+        deviceFrameOffset: .zero,
+        textInsets: EdgeInsets(top: 72, leading: 120, bottom: 0, trailing: 120),
+        imageInsets: EdgeInsets(top: 0, leading: 128, bottom: 72, trailing: 128),
+        keywordFontSize: 148,
+        titleFontSize: 72,
+        textGap: 24,
+        textColor: .white,
+        backgroundColor: defaultBackgroundColor
+    )
+
+    static let iPhone14Pro = Self(
+        size: CGSize(width: 1179, height: 2556),
         deviceFrameOffset: .zero,
         textInsets: EdgeInsets(top: 72, leading: 120, bottom: 0, trailing: 120),
         imageInsets: EdgeInsets(top: 0, leading: 128, bottom: 72, trailing: 128),

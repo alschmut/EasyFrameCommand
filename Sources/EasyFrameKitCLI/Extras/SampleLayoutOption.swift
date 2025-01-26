@@ -4,6 +4,7 @@ import FrameKit
 enum SampleLayoutOption: String, RawRepresentable, ExpressibleByArgument, LayoutProviderOption {
     case iPhone65 = "iphone_65"
     case iPhone55 = "iphone_55"
+    case iPhone14Pro = "iPhone_14_pro"
     case iPadPro = "ipad_pro"
     case iPadPro3rdGen = "ipad_pro_3rd_gen"
     case iPhone65Hero = "iphone_65_hero"
@@ -25,6 +26,7 @@ enum SampleLayoutOption: String, RawRepresentable, ExpressibleByArgument, Layout
         case .iPadPro3rdGenHero: return .iPadPro3rdGenHero
         case .iPadProHero: return .iPadProHero
         case .iPhone55Hero: return .iPhone55Hero
+        case .iPhone14Pro: return .iPhone14Pro
         }
     }
 }
