@@ -23,7 +23,7 @@ struct EasyFrameCommand: ParsableCommand {
     var keyword: String
 
     @Option(name: .shortAndLong, help: "A string to be shown with regular font")
-    var title: String
+    var title: String?
 
     @Option(
         name: .shortAndLong,

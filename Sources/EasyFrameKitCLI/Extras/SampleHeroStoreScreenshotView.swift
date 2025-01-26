@@ -13,17 +13,14 @@ struct SampleHeroStoreScreenshotView: StoreScreenshotView {
 
     var body: some View {
         ZStack {
-            // Background Colour
             layout.backgroundColor
 
-            // Background Image
-            content.backgroundImage.map { backgroundImage in
+            if let backgroundImage = content.backgroundImage {
                 Image(nsImage: backgroundImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
 
-            // Images
             GeometryReader() { geometry in
                 ZStack {
                     HStack(alignment: .center, spacing: 10) {
@@ -49,16 +46,13 @@ struct SampleHeroStoreScreenshotView: StoreScreenshotView {
                 .padding(self.layout.imageInsets)
             }
 
-            // Text
-            HStack {
-                Text(content.keyword)
-                    .font(keywordFont)
-                    .foregroundColor(self.layout.textColor)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(nil)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .padding(self.layout.textInsets)
+            Text(content.keyword)
+                .font(keywordFont)
+                .foregroundColor(self.layout.textColor)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .padding(self.layout.textInsets)
         }
     }
 }
