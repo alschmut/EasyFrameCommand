@@ -46,3 +46,10 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
         }
     }
 }
+
+//struct ImageView: View {
+//    let screenshot: String
+//    var body: some View {
+//
+//    }
+//}
