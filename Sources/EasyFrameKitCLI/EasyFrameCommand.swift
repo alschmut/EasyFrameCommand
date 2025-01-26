@@ -65,14 +65,15 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
         let backgroundImage: Image? = if let backgroundImage { Image(nsImage: try nsImage(fromPath: backgroundImage)) } else { nil }
         let content = SampleContent(
-            locale: Locale(identifier: locale),
             title: title,
             backgroundImage: backgroundImage,
             framedScreenshots: framedScreenshots
         )
 
         let view = SampleStoreScreenshotView.makeView(layout: layout, content: content)
-        let viewWithEnvironment = view.environment(\.layoutDirection, isRTL ? .rightToLeft : .leftToRight)
+        let viewWithEnvironment = view
+            .environment(\.layoutDirection, isRTL ? .rightToLeft : .leftToRight)
+            .environment(\.locale, Locale(identifier: locale))
         let nsImage = try nsImage(fromView: viewWithEnvironment, size: view.layout.size)
         try saveFile(nsImage: nsImage, outputPath: output)
     }
