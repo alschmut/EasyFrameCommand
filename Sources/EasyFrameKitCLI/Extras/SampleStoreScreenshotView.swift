@@ -15,12 +15,12 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
             layout.backgroundColor
 
             if let backgroundImage = content.backgroundImage {
-                Image(nsImage: backgroundImage)
+                backgroundImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
 
-            Image(nsImage: content.framedScreenshots[0])
+            content.framedScreenshots[0]
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
@@ -32,24 +32,9 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
                     .foregroundColor(layout.textColor)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
-
-                if let title = content.title {
-                    Text(title)
-                        .font(titleFont)
-                        .foregroundColor(layout.textColor)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(nil)
-                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(self.layout.textInsets)
         }
     }
 }
-
-//struct ImageView: View {
-//    let screenshot: String
-//    var body: some View {
-//
-//    }
-//}

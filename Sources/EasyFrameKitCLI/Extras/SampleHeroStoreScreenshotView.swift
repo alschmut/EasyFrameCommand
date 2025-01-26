@@ -16,7 +16,7 @@ struct SampleHeroStoreScreenshotView: StoreScreenshotView {
             layout.backgroundColor
 
             if let backgroundImage = content.backgroundImage {
-                Image(nsImage: backgroundImage)
+                backgroundImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
@@ -24,20 +24,20 @@ struct SampleHeroStoreScreenshotView: StoreScreenshotView {
             GeometryReader() { geometry in
                 ZStack {
                     HStack(alignment: .center, spacing: 10) {
-                        Image(nsImage: content.framedScreenshots[1])
+                        content.framedScreenshots[1]
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: geometry.size.width / 2.6)
 
                         Spacer()
 
-                        Image(nsImage: content.framedScreenshots[2])
+                        content.framedScreenshots[2]
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: geometry.size.width / 2.6)
                     }
 
-                    Image(nsImage: content.framedScreenshots[0])
+                    content.framedScreenshots[0]
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: geometry.size.width / 2.2, alignment: .center)
