@@ -13,9 +13,19 @@ struct ScreenshotView: View {
     let isRightToLeft: Bool
     let locale: String
 
+    let orange = Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
+
     var body: some View {
         ZStack {
-            Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
+            MeshGradient(width: 3, height: 3, points: [
+                .init(0, 0), .init(0.5, 0), .init(1, 0),
+                .init(0, 0.5), .init(0.5, 0.5), .init(1, 0.5),
+                .init(0, 1), .init(0.5, 1), .init(1, 1)
+            ], colors: [
+                .purple, .purple, .purple,
+                orange, orange, .purple,
+                orange, orange, orange
+            ])
 
             if let backgroundImage = content.backgroundImage {
                 backgroundImage
@@ -23,20 +33,24 @@ struct ScreenshotView: View {
                     .scaledToFit()
             }
 
-            content.framedScreenshots[0]
-                .resizable()
-                .scaledToFit()
-                .frame(maxHeight: .infinity, alignment: .bottom)
-                .padding(layout.imageInsets)
+            VStack(spacing: 0) {
+                Text(content.title)
+                    .font(.system(size: layout.titleFontSize))
+                    .lineSpacing(10)
+                    .kerning(3)
+                    .fontWeight(.bold)
+                    .fontDesign(.serif)
+                    .foregroundStyle(layout.textColor)
+                    .multilineTextAlignment(.center)
+                    .padding(layout.textInsets)
+                    .frame(minHeight: 500)
 
-            Text(content.title)
-                .font(.system(size: layout.titleFontSize))
-                .fontWeight(.bold)
-                .fontDesign(.rounded)
-                .foregroundStyle(layout.textColor)
-                .multilineTextAlignment(.center)
-                .frame(maxHeight: .infinity, alignment: .top)
-                .padding(layout.textInsets)
+                content.framedScreenshots[0]
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .padding(layout.imageInsets)
+            }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, Locale(identifier: locale))

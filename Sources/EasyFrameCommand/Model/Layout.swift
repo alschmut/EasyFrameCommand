@@ -20,8 +20,8 @@ struct Layout: LayoutProvider {
         size: CGSize(width: 1290, height: 2796),
         deviceFrameOffset: .zero,
         cornerRadius: 35,
-        textInsets: EdgeInsets(top: 72, leading: 120, bottom: 0, trailing: 120),
-        imageInsets: EdgeInsets(top: 0, leading: 128, bottom: 72, trailing: 128),
+        textInsets: EdgeInsets(top: 0, leading: 100, bottom: 0, trailing: 100),
+        imageInsets: EdgeInsets(top: 0, leading: 0, bottom: 80, trailing: 0),
         titleFontSize: 90,
         textColor: .white
     )
