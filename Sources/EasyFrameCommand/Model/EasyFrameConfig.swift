@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EasyFrameConfig: Decodable {
-    let screens: [ScreenConfig]
+    let appStoreScreens: [ScreenConfig]
 }
 
 struct ScreenConfig: Decodable {

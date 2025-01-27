@@ -1,13 +1,14 @@
 {
-    "screens": [
+    "appStoreScreens": [
         {
+            "outputFileName": "1-tear-tales-calendar",
             "languages": [
                 {
                     "locale": "en-GB",
                     "title": "Document your crying moments"
                 }
             ],
-            "screenshots": ["1-tear-tales-calendar"]
+            "screenshots": ["1-tear-tales-calendar", "2-tear-tales-list"]
         },
         {
             "languages": [

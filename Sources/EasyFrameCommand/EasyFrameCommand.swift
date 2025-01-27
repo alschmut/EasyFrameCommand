@@ -53,18 +53,16 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
         let screenshotsFolderURL = rootFolderURL.appendingPathComponent("screenshots")
         let outputFolderURL = rootFolderURL.appendingPathComponent("framed_screenshots")
-        let easyFrameJsonFileURL = screenshotsFolderURL.appendingPathComponent("EasyFrame.json")
 
-        let data = try Data(contentsOf: easyFrameJsonFileURL)
-        let easyFrameConfig = try JSONDecoder().decode(EasyFrameConfig.self, from: data)
+        let easyFrameConfig = try getEasyFrameConfig(screenshotsFolderURL: screenshotsFolderURL)
 
-        try easyFrameConfig.screens.forEach { screen in
-            try screen.languages.forEach { language in
+        try easyFrameConfig.appStoreScreens.forEach { appStoreScreen in
+            try appStoreScreen.languages.forEach { language in
 
                 let screenshotsLocaleFolderURL = screenshotsFolderURL.appendingPathComponent(language.locale)
                 let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
 
-                try screen.screenshots.forEach { screenshot in
+                try appStoreScreen.screenshots.forEach { screenshot in
                     let matchingScreenshots = try FileManager.default
                         .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
                         .filter { url in
@@ -98,11 +96,20 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     let nsImage = try getNSImage(fromView: view, size: view.layout.size)
 
                     try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
-                    let ouputFileURL = outputFolderURL.appendingPathComponent(screenshot).appendingPathExtension("jpg")
+                    let fileName = matchingScreenshots.first!
+                        .deletingPathExtension()
+                        .appendingPathExtension("jpg").lastPathComponent
+                    let ouputFileURL = outputFolderURL.appendingPathComponent(fileName)
                     try saveFile(nsImage: nsImage, outputPath: ouputFileURL.relativePath)
                 }
             }
         }
+    }
+
+    private func getEasyFrameConfig(screenshotsFolderURL: URL) throws -> EasyFrameConfig {
+        let easyFrameJsonFileURL = screenshotsFolderURL.appendingPathComponent("EasyFrame.json")
+        let data = try Data(contentsOf: easyFrameJsonFileURL)
+        return try JSONDecoder().decode(EasyFrameConfig.self, from: data)
     }
 
     private func saveFile(nsImage: NSImage, outputPath: String) throws {
