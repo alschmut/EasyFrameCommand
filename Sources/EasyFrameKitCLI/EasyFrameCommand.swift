@@ -62,11 +62,12 @@ struct EasyFrameCommand: AsyncParsableCommand {
     mutating func run() async throws {
         let layout = layout.value
         let framedScreenshots = try screenshots.compactMap { screenshot in
-            try makeImage(
+            let framedScreenshot = try makeImage(
                 screenshot: screenshot,
                 deviceFrame: deviceFrame,
                 deviceFrameOffset: layout.deviceFrameOffset
             )
+            return Image(nsImage: framedScreenshot)
         }
 
         let backgroundImage: Image? = if let backgroundImage { Image(nsImage: try nsImage(fromPath: backgroundImage)) } else { nil }
@@ -85,15 +86,14 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     @MainActor
-    private func makeImage(screenshot: String, deviceFrame: String, deviceFrameOffset: CGSize) throws -> Image? {
+    private func makeImage(screenshot: String, deviceFrame: String, deviceFrameOffset: CGSize) throws -> NSImage {
         let screenshotImage = try nsImage(fromPath: screenshot)
         let deviceFrameImage = try nsImage(fromPath: deviceFrame)
         let view = DeviceFrameView(images: [
             ImageData(nsImage: screenshotImage),
             ImageData(nsImage: deviceFrameImage, offset: deviceFrameOffset)
         ])
-        let nsImage = try nsImage(fromView: view, size: deviceFrameImage.size)
-        return Image(nsImage: nsImage)
+        return try nsImage(fromView: view, size: deviceFrameImage.size)
     }
 
     private func saveFile(nsImage: NSImage, outputPath: String) throws {
