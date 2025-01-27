@@ -1,5 +1,5 @@
 //
-//  DeviceFrameView.swift
+//  ScreenshotView.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -41,4 +41,17 @@ struct ScreenshotView: View {
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, Locale(identifier: locale))
     }
+}
+
+#Preview {
+    ScreenshotView(
+        layout: .iPhone15ProMax,
+        content: ViewModel(
+            title: "My title",
+            backgroundImage: NSImage(),
+            framedScreenshots: []
+        ),
+        isRightToLeft: false,
+        locale: "en-GB"
+    )
 }

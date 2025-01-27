@@ -22,7 +22,7 @@ struct Layout: LayoutProvider {
         cornerRadius: 35,
         textInsets: EdgeInsets(top: 72, leading: 120, bottom: 0, trailing: 120),
         imageInsets: EdgeInsets(top: 0, leading: 128, bottom: 72, trailing: 128),
-        titleFontSize: 148,
+        titleFontSize: 90,
         textColor: .white
     )
 
