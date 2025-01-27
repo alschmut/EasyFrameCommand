@@ -21,12 +21,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
     )
     var layout: LayoutOption
 
-    @Option(name: .shortAndLong, help: "A target locale's identifier to be used to adjust layout within view")
-    var locale: String
-
-    @Option(name: .shortAndLong, help: "A title to be shown with bold font")
-    var title: String
-
     @Option(
         name: .shortAndLong,
         help: "An absolute or relative path to the image to be shown as background",
@@ -36,59 +30,79 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @Option(
         name: .shortAndLong,
+        help: "An absolute or relative path to the root folder, which contains the individual folder for the locales and the EasyFrame.json file",
+        completion: .file()
+    )
+    var rootFolder: String
+
+    @Option(
+        name: .shortAndLong,
         help: "An absolute or relative path to the image to be shown as the device frame. Download them by 'fastlane frameit download_frames')",
         completion: .file()
     )
     var deviceFrame: String
 
-    @Option(name: .shortAndLong, help: "An absolute or relative path to output", completion: .file())
-    var output: String
-
-    @Flag(name: .long, help: "To choose hero screenshot view pass this flag.")
-    var isHero: Bool = false
-
     @Flag(name: .long, help: "If the language is read right-to-left")
     var isRightToLeft: Bool = false
-
-    @Option(
-        name: .shortAndLong,
-        parsing: .remaining,
-        help: "An absolute or relative path to the image to be shown as the embeded screenshot within a device frame",
-        completion: .file()
-    )
-    var screenshots: [String] = []
 
     @MainActor
     mutating func run() async throws {
         let layout = layout.value
         let frameImage = try getNSImage(fromPath: deviceFrame)
 
-        let framedScreenshots = try screenshots.map { screenshot in
-            let screenshotImage = try getNSImage(fromPath: screenshot)
-            let frameData = FrameData(
-                screenshotImage: screenshotImage,
-                frameImage: frameImage,
-                screenshotCornerRadius: layout.cornerRadius,
-                frameOffset: layout.deviceFrameOffset
-            )
-            let view = DeviceFrameView(frameData: frameData)
-            return try getNSImage(fromView: view, size: frameImage.size)
+        let rootFolderURL = URL(fileURLWithPath: rootFolder)
+        let screenshotsFolderURL = rootFolderURL.appendingPathComponent("screenshots")
+        let outputFolderURL = rootFolderURL.appendingPathComponent("framed_screenshots")
+        let easyFrameJsonFileURL = screenshotsFolderURL.appendingPathComponent("EasyFrame.json")
+
+        let data = try Data(contentsOf: easyFrameJsonFileURL)
+        let easyFrameConfig = try JSONDecoder().decode(EasyFrameConfig.self, from: data)
+
+        try easyFrameConfig.screens.forEach { screen in
+            try screen.languages.forEach { language in
+
+                let screenshotsLocaleFolderURL = screenshotsFolderURL.appendingPathComponent(language.locale)
+                let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
+
+                try screen.screenshots.forEach { screenshot in
+                    let matchingScreenshots = try FileManager.default
+                        .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
+                        .filter { url in
+                            url.lastPathComponent.contains(screenshot)
+                        }
+
+                    let framedScreenshots = try matchingScreenshots.map { screenshot in
+                        let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
+                        let frameData = FrameData(
+                            screenshotImage: screenshotImage,
+                            frameImage: frameImage,
+                            screenshotCornerRadius: layout.cornerRadius,
+                            frameOffset: layout.deviceFrameOffset
+                        )
+                        let view = DeviceFrameView(frameData: frameData)
+                        return try getNSImage(fromView: view, size: frameImage.size)
+                    }
+
+                    let content = ViewModel(
+                        title: language.title,
+                        backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
+                        framedScreenshots: framedScreenshots
+                    )
+
+                    let view = ScreenshotView(
+                        layout: layout,
+                        content: content,
+                        isRightToLeft: isRightToLeft,
+                        locale: language.locale
+                    )
+                    let nsImage = try getNSImage(fromView: view, size: view.layout.size)
+
+                    try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
+                    let ouputFileURL = outputFolderURL.appendingPathComponent(screenshot).appendingPathExtension("jpg")
+                    try saveFile(nsImage: nsImage, outputPath: ouputFileURL.relativePath)
+                }
+            }
         }
-
-        let content = ViewModel(
-            title: title,
-            backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
-            framedScreenshots: framedScreenshots
-        )
-
-        let view = ScreenshotView(
-            layout: layout,
-            content: content,
-            isRightToLeft: isRightToLeft,
-            locale: locale
-        )
-        let nsImage = try getNSImage(fromView: view, size: view.layout.size)
-        try saveFile(nsImage: nsImage, outputPath: output)
     }
 
     private func saveFile(nsImage: NSImage, outputPath: String) throws {
@@ -96,7 +110,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             throw EasyFrameError.imageOperationFailure("Error: can't generate image from view")
         }
 
-        let result = FileManager.default.createFile(atPath: outputPath, contents: jpegData, attributes: nil)
+        let result = FileManager.default.createFile(atPath: outputPath, contents: jpegData)
         guard result else {
             throw EasyFrameError.fileSavingFailure("Error: can't save generated image at \(outputPath)")
         }
