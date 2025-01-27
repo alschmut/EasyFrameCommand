@@ -61,45 +61,34 @@ struct EasyFrameCommand: AsyncParsableCommand {
     @MainActor
     mutating func run() async throws {
         let layout = layout.value
-        let framedScreenshots = try screenshots.compactMap { screenshot in
-            let framedScreenshot = try makeImage(
-                screenshot: screenshot,
-                deviceFrame: deviceFrame,
+        let frameImage = try getNSImage(fromPath: deviceFrame)
+
+        let framedScreenshots = try screenshots.map { screenshot in
+            let screenshotImage = try getNSImage(fromPath: screenshot)
+            let frameData = FrameData(
+                screenshotImage: screenshotImage,
+                frameImage: frameImage,
                 screenshotCornerRadius: layout.cornerRadius,
-                deviceFrameOffset: layout.deviceFrameOffset
+                frameOffset: layout.deviceFrameOffset
             )
-            return Image(nsImage: framedScreenshot)
+            let view = DeviceFrameView(frameData: frameData)
+            return try getNSImage(fromView: view, size: frameImage.size)
         }
 
-        let backgroundImage: Image? = if let backgroundImage { Image(nsImage: try nsImage(fromPath: backgroundImage)) } else { nil }
         let content = SampleContent(
             title: title,
-            backgroundImage: backgroundImage,
+            backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
             framedScreenshots: framedScreenshots
         )
 
-        let view = SampleStoreScreenshotView(layout: layout, content: content)
-        let viewWithEnvironment = view
-            .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
-            .environment(\.locale, Locale(identifier: locale))
-        let nsImage = try nsImage(fromView: viewWithEnvironment, size: view.layout.size)
-        try saveFile(nsImage: nsImage, outputPath: output)
-    }
-
-    @MainActor
-    private func makeImage(
-        screenshot: String,
-        deviceFrame: String,
-        screenshotCornerRadius: CGFloat,
-        deviceFrameOffset: CGSize
-    ) throws -> NSImage {
-        let screenshotImage = try nsImage(fromPath: screenshot)
-        let deviceFrameImage = try nsImage(fromPath: deviceFrame)
-        let view = DeviceFrameView(
-            screenshotImage: ImageData(nsImage: screenshotImage, cornerRadius: screenshotCornerRadius),
-            frameImage: ImageData(nsImage: deviceFrameImage, offset: deviceFrameOffset)
+        let view = SampleStoreScreenshotView(
+            layout: layout,
+            content: content,
+            isRightToLeft: isRightToLeft,
+            locale: locale
         )
-        return try nsImage(fromView: view, size: deviceFrameImage.size)
+        let nsImage = try getNSImage(fromView: view, size: view.layout.size)
+        try saveFile(nsImage: nsImage, outputPath: output)
     }
 
     private func saveFile(nsImage: NSImage, outputPath: String) throws {
@@ -119,7 +108,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         return bitmapRep.representation(using: .jpeg, properties: [:])
     }
 
-    private func nsImage(fromPath path: String) throws -> NSImage {
+    private func getNSImage(fromPath path: String) throws -> NSImage {
         let absolutePath = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath).path
         guard let deviceFrameImage = NSImage(contentsOfFile: absolutePath) else {
             throw EasyFrameError.fileNotFound("device frame was not found at \(path)")
@@ -128,7 +117,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     @MainActor
-    private func nsImage<Content: View>(fromView view: Content, size: CGSize) throws -> NSImage {
+    private func getNSImage<Content: View>(fromView view: Content, size: CGSize) throws -> NSImage {
         let renderer = ImageRenderer(content: view)
         renderer.proposedSize = .init(size)
         renderer.scale = 1.0
@@ -143,4 +132,34 @@ enum EasyFrameError: Error {
     case fileNotFound(String)
     case imageOperationFailure(String)
     case fileSavingFailure(String)
+}
+
+struct FrameData {
+    let screenshotImage: Image
+    let screenshotSize: CGSize
+    let screenshotCornerRadius: CGFloat
+
+    let frameImage: Image
+    let frameSize: CGSize
+    let frameOffset: CGSize
+
+    init(
+        screenshotImage: NSImage,
+        frameImage: NSImage,
+        screenshotCornerRadius: CGFloat,
+        frameOffset: CGSize
+    ) {
+        self.screenshotImage = Image(nsImage: screenshotImage)
+        self.screenshotSize = Self.size(fromNSImage: screenshotImage)
+        self.screenshotCornerRadius = screenshotCornerRadius
+
+        self.frameImage = Image(nsImage: frameImage)
+        self.frameSize = Self.size(fromNSImage: frameImage)
+        self.frameOffset = frameOffset
+    }
+
+    private static func size(fromNSImage nsImage: NSImage) -> CGSize {
+        let representation = nsImage.representations[0]
+        return CGSize(width: representation.pixelsWide, height: representation.pixelsHigh)
+    }
 }

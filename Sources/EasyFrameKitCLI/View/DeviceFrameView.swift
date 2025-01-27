@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct DeviceFrameView: View {
-    let screenshotImage: ImageData
-    let frameImage: ImageData
+    let frameData: FrameData
 
     var body: some View {
         ZStack {
-            screenshotImage.image
+            frameData.screenshotImage
                 .resizable()
-                .frame(width: screenshotImage.size.width, height: screenshotImage.size.height)
-                .clipShape(RoundedRectangle(cornerRadius: screenshotImage.cornerRadius))
-                .offset(screenshotImage.offset)
+                .frame(width: frameData.screenshotSize.width, height: frameData.screenshotSize.height)
+                .clipShape(RoundedRectangle(cornerRadius: frameData.screenshotCornerRadius))
 
-            frameImage.image
+            frameData.frameImage
                 .resizable()
-                .frame(width: frameImage.size.width, height: frameImage.size.height)
+                .frame(width: frameData.frameSize.width, height: frameData.frameSize.height)
+                .offset(frameData.frameOffset)
         }
     }
 }

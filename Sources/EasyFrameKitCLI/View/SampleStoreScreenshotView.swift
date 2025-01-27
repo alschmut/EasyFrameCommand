@@ -10,6 +10,8 @@ import SwiftUI
 struct SampleStoreScreenshotView: StoreScreenshotView {
     let layout: SampleLayout
     let content: SampleContent
+    let isRightToLeft: Bool
+    let locale: String
 
     var body: some View {
         ZStack {
@@ -37,5 +39,7 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(layout.textInsets)
         }
+        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
+        .environment(\.locale, Locale(identifier: locale))
     }
 }
