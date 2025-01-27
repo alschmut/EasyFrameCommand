@@ -97,7 +97,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
         let result = FileManager.default.createFile(atPath: outputPath, contents: jpegData, attributes: nil)
         guard result else {
-            throw EasyFrameError.fileSavingFailure("Error: can't save generated image at \(String(describing: outputPath))")
+            throw EasyFrameError.fileSavingFailure("Error: can't save generated image at \(outputPath)")
         }
     }
 
@@ -172,9 +172,4 @@ protocol StoreScreenshotView: View {
 
     var layout: Layout { get }
     var content: Content { get }
-}
-
-protocol LayoutProviderOption: CaseIterable, RawRepresentable where RawValue == String {
-    associatedtype Layout: LayoutProvider
-    var value: Layout { get }
 }

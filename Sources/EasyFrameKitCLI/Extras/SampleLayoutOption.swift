@@ -1,7 +1,7 @@
 import ArgumentParser
 import FrameKit
 
-enum SampleLayoutOption: String, RawRepresentable, ExpressibleByArgument, LayoutProviderOption {
+enum SampleLayoutOption: String, CaseIterable, ExpressibleByArgument {
     case iPhone15ProMax = "iPhone_15_pro"
     case iPadPro = "ipad_pro"
 
