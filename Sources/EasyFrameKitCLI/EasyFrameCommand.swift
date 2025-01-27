@@ -47,8 +47,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
     @Flag(name: .long, help: "To choose hero screenshot view pass this flag.")
     var isHero: Bool = false
 
-    @Flag(name: .long, help: "If tehe target is RLT language, then add this")
-    var isRTL: Bool = false
+    @Flag(name: .long, help: "If the language is read right-to-left")
+    var isRightToLeft: Bool = false
 
     @Option(
         name: .shortAndLong,
@@ -78,7 +78,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
         let view = SampleStoreScreenshotView(layout: layout, content: content)
         let viewWithEnvironment = view
-            .environment(\.layoutDirection, isRTL ? .rightToLeft : .leftToRight)
+            .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
             .environment(\.locale, Locale(identifier: locale))
         let nsImage = try nsImage(fromView: viewWithEnvironment, size: view.layout.size)
         try saveFile(nsImage: nsImage, outputPath: output)
