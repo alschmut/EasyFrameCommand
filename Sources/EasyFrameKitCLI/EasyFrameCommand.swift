@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 import ArgumentParser
 
@@ -164,12 +163,4 @@ enum EasyFrameError: Error {
 protocol LayoutProvider {
     var size: CGSize { get }
     var deviceFrameOffset: CGSize { get }
-}
-
-protocol StoreScreenshotView: View {
-    associatedtype Layout: LayoutProvider
-    associatedtype Content
-
-    var layout: Layout { get }
-    var content: Content { get }
 }

@@ -1,6 +1,12 @@
-import Foundation
 import SwiftUI
-import FrameKit
+
+protocol StoreScreenshotView: View {
+    associatedtype Layout: LayoutProvider
+    associatedtype Content
+
+    var layout: Layout { get }
+    var content: Content { get }
+}
 
 extension StoreScreenshotView where Self.Layout == SampleLayout {
     var keywordFont: Font { Font.system(size: layout.keywordFontSize, weight: .bold, design: .default) }

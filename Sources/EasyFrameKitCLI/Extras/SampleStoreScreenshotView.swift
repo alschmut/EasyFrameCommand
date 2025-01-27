@@ -1,5 +1,3 @@
-import AppKit
-import FrameKit
 import SwiftUI
 
 struct SampleStoreScreenshotView: StoreScreenshotView {

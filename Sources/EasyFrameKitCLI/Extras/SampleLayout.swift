@@ -1,5 +1,4 @@
 import SwiftUI
-import FrameKit
 
 struct SampleLayout: LayoutProvider {
     let size: CGSize
