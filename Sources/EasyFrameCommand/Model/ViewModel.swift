@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SampleContent {
+struct ViewModel {
     let title: String
     let backgroundImage: Image?
     let framedScreenshots: [Image]

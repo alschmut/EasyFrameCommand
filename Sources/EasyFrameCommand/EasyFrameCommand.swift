@@ -16,10 +16,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @Option(
         name: [.customShort("L"), .customLong("layout")],
-        help: "\(SampleLayoutOption.allCases.map({ "\"\($0.rawValue)\"" }).joined(separator: ", "))",
-        completion: .list(SampleLayoutOption.allCases.map(\.rawValue))
+        help: "\(LayoutOption.allCases.map({ "\"\($0.rawValue)\"" }).joined(separator: ", "))",
+        completion: .list(LayoutOption.allCases.map(\.rawValue))
     )
-    var layout: SampleLayoutOption
+    var layout: LayoutOption
 
     @Option(name: .shortAndLong, help: "A target locale's identifier to be used to adjust layout within view")
     var locale: String
@@ -75,7 +75,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             return try getNSImage(fromView: view, size: frameImage.size)
         }
 
-        let content = SampleContent(
+        let content = ViewModel(
             title: title,
             backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
             framedScreenshots: framedScreenshots

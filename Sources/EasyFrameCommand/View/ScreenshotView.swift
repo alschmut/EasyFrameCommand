@@ -8,38 +8,35 @@
 import SwiftUI
 
 struct ScreenshotView: View {
-    let layout: SampleLayout
-    let content: SampleContent
+    let layout: Layout
+    let content: ViewModel
     let isRightToLeft: Bool
     let locale: String
 
     var body: some View {
         ZStack {
-            layout.backgroundColor
+            Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
 
             if let backgroundImage = content.backgroundImage {
                 backgroundImage
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
             }
 
             content.framedScreenshots[0]
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .scaledToFit()
+                .frame(maxHeight: .infinity, alignment: .bottom)
                 .padding(layout.imageInsets)
 
-            VStack(alignment: .leading, spacing: layout.textGap) {
-                Text(content.title)
-                    .font(.system(size: layout.keywordFontSize))
-                    .fontWeight(.bold)
-                    .fontDesign(.rounded)
-                    .foregroundColor(layout.textColor)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(nil)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(layout.textInsets)
+            Text(content.title)
+                .font(.system(size: layout.titleFontSize))
+                .fontWeight(.bold)
+                .fontDesign(.rounded)
+                .foregroundStyle(layout.textColor)
+                .multilineTextAlignment(.center)
+                .frame(maxHeight: .infinity, alignment: .top)
+                .padding(layout.textInsets)
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, Locale(identifier: locale))
