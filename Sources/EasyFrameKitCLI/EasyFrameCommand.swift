@@ -1,3 +1,10 @@
+//
+//  DeviceFrameView.swift
+//  easy-frame
+//
+//  Created by Alexander Schmutz on 27.01.25.
+//
+
 import SwiftUI
 import ArgumentParser
 
@@ -126,41 +133,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 }
 
-struct DeviceFrameView: View {
-    let images: [ImageData]
-
-    var body: some View {
-        ZStack {
-            ForEach(images) { image in
-                image.image
-                    .resizable()
-                    .frame(width: image.size.width, height: image.size.height)
-                    .offset(image.offset)
-            }
-        }
-    }
-}
-
-struct ImageData: Identifiable, Sendable {
-    let id = UUID()
-    let image: Image
-    let size: CGSize
-    var offset: CGSize = .zero
-
-    init(nsImage: NSImage, offset: CGSize = .zero) {
-        image = Image(nsImage: nsImage)
-        size = nsImage.size
-        self.offset = offset
-    }
-}
-
 enum EasyFrameError: Error {
     case fileNotFound(String)
     case imageOperationFailure(String)
     case fileSavingFailure(String)
-}
-
-protocol LayoutProvider {
-    var size: CGSize { get }
-    var deviceFrameOffset: CGSize { get }
 }
