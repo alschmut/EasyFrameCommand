@@ -81,7 +81,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             framedScreenshots: framedScreenshots
         )
 
-        let view = SampleStoreScreenshotView(
+        let view = ScreenshotView(
             layout: layout,
             content: content,
             isRightToLeft: isRightToLeft,

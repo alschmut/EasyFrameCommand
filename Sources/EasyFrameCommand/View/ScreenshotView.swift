@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SampleStoreScreenshotView: StoreScreenshotView {
+struct ScreenshotView: View {
     let layout: SampleLayout
     let content: SampleContent
     let isRightToLeft: Bool
@@ -31,7 +31,9 @@ struct SampleStoreScreenshotView: StoreScreenshotView {
 
             VStack(alignment: .leading, spacing: layout.textGap) {
                 Text(content.title)
-                    .font(keywordFont)
+                    .font(.system(size: layout.keywordFontSize))
+                    .fontWeight(.bold)
+                    .fontDesign(.rounded)
                     .foregroundColor(layout.textColor)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
