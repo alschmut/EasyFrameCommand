@@ -28,9 +28,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
     )
     var rootFolder: String
 
-    @Flag(name: .long, help: "If the language is read right-to-left")
-    var isRightToLeft: Bool = false
-
     @MainActor
     mutating func run() async throws {
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
@@ -76,7 +73,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     let view = ScreenshotView(
                         layout: layout,
                         content: viewModel,
-                        isRightToLeft: isRightToLeft,
                         locale: language.locale
                     )
                     let nsImage = try getNSImage(fromView: view, size: view.layout.size)

@@ -10,7 +10,6 @@ import SwiftUI
 struct ScreenshotView: View {
     let layout: Layout
     let content: ViewModel
-    let isRightToLeft: Bool
     let locale: String
 
     let orange = Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
@@ -52,7 +51,6 @@ struct ScreenshotView: View {
                     .padding(layout.imageInsets)
             }
         }
-        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, Locale(identifier: locale))
     }
 }
@@ -65,7 +63,6 @@ struct ScreenshotView: View {
             backgroundImage: NSImage(),
             framedScreenshots: []
         ),
-        isRightToLeft: false,
         locale: "en-GB"
     )
 }
