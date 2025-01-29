@@ -82,8 +82,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
                         .deletingPathExtension()
                         .appendingPathExtension("jpg")
                         .lastPathComponent
-                    let ouputFileURL = outputFolderURL.appendingPathComponent(fileName)
-                    try saveFile(nsImage: nsImage, outputPath: ouputFileURL.relativePath)
+                    let outputFileURL = outputFolderURL.appendingPathComponent(fileName)
+                    try saveFile(nsImage: nsImage, outputPath: outputFileURL.relativePath)
                 }
             }
         }
