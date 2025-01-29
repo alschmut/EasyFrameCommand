@@ -15,13 +15,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     @Option(
-        name: [.customShort("L"), .customLong("layout")],
-        help: "\(LayoutOption.allCases.map({ "\"\($0.rawValue)\"" }).joined(separator: ", "))",
-        completion: .list(LayoutOption.allCases.map(\.rawValue))
-    )
-    var layout: LayoutOption
-
-    @Option(
         name: .shortAndLong,
         help: "An absolute or relative path to the image to be shown as background",
         completion: .file()
@@ -35,21 +28,11 @@ struct EasyFrameCommand: AsyncParsableCommand {
     )
     var rootFolder: String
 
-    @Option(
-        name: .shortAndLong,
-        help: "An absolute or relative path to the image to be shown as the device frame. Download them by 'fastlane frameit download_frames')",
-        completion: .file()
-    )
-    var deviceFrame: String
-
     @Flag(name: .long, help: "If the language is read right-to-left")
     var isRightToLeft: Bool = false
 
     @MainActor
     mutating func run() async throws {
-        let layout = layout.value
-        let frameImage = try getNSImage(fromPath: deviceFrame)
-
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
         let screenshotsFolderURL = rootFolderURL.appendingPathComponent("screenshots")
         let outputFolderURL = rootFolderURL.appendingPathComponent("framed_screenshots")
@@ -63,6 +46,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
 
                 try appStoreScreen.screenshots.forEach { screenshot in
+                    let layout = Layout.iPhone15ProMax
                     let matchingScreenshots = try FileManager.default
                         .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
                         .filter { url in
@@ -71,6 +55,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                     let framedScreenshots = try matchingScreenshots.map { screenshot in
                         let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
+                        let frameImage = try getFrameImage(pixelSize: screenshotImage.pixelSize)
+
                         let frameData = FrameData(
                             screenshotImage: screenshotImage,
                             frameImage: frameImage,
@@ -81,7 +67,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                         return try getNSImage(fromView: view, size: frameImage.size)
                     }
 
-                    let content = ViewModel(
+                    let viewModel = ViewModel(
                         title: language.title,
                         backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
                         framedScreenshots: framedScreenshots
@@ -89,7 +75,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                     let view = ScreenshotView(
                         layout: layout,
-                        content: content,
+                        content: viewModel,
                         isRightToLeft: isRightToLeft,
                         locale: language.locale
                     )
@@ -98,7 +84,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
                     let fileName = matchingScreenshots.first!
                         .deletingPathExtension()
-                        .appendingPathExtension("jpg").lastPathComponent
+                        .appendingPathExtension("jpg")
+                        .lastPathComponent
                     let ouputFileURL = outputFolderURL.appendingPathComponent(fileName)
                     try saveFile(nsImage: nsImage, outputPath: ouputFileURL.relativePath)
                 }
@@ -147,40 +134,22 @@ struct EasyFrameCommand: AsyncParsableCommand {
         }
         return nsImage
     }
-}
 
-enum EasyFrameError: Error {
-    case fileNotFound(String)
-    case imageOperationFailure(String)
-    case fileSavingFailure(String)
-}
-
-struct FrameData {
-    let screenshotImage: Image
-    let screenshotSize: CGSize
-    let screenshotCornerRadius: CGFloat
-
-    let frameImage: Image
-    let frameSize: CGSize
-    let frameOffset: CGSize
-
-    init(
-        screenshotImage: NSImage,
-        frameImage: NSImage,
-        screenshotCornerRadius: CGFloat,
-        frameOffset: CGSize
-    ) {
-        self.screenshotImage = Image(nsImage: screenshotImage)
-        self.screenshotSize = Self.size(fromNSImage: screenshotImage)
-        self.screenshotCornerRadius = screenshotCornerRadius
-
-        self.frameImage = Image(nsImage: frameImage)
-        self.frameSize = Self.size(fromNSImage: frameImage)
-        self.frameOffset = frameOffset
+    func getFrameImage(pixelSize: CGSize) throws -> NSImage {
+        guard let matchingDevice = LayoutOption.allCases.first(where: { layoutOption in
+            layoutOption.value.size == pixelSize
+        }) else {
+            throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
+        }
+        // NSImage(resource: .appleiPhone14ProMaxBlack)
+        let url = URL(string: "file:///Users/alexander.schmutz/.fastlane/frameit/latest/\(matchingDevice.frameImageName)")!
+        return NSImage(contentsOf: url)!
     }
 
-    private static func size(fromNSImage nsImage: NSImage) -> CGSize {
-        let representation = nsImage.representations[0]
-        return CGSize(width: representation.pixelsWide, height: representation.pixelsHigh)
+    enum EasyFrameError: Error {
+        case fileNotFound(String)
+        case imageOperationFailure(String)
+        case fileSavingFailure(String)
+        case deviceFrameNotSupported(String)
     }
 }

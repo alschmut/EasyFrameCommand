@@ -13,8 +13,15 @@ enum LayoutOption: String, CaseIterable, ExpressibleByArgument {
 
     var value: Layout {
         switch self {
-        case .iPhone15ProMax: return .iPhone15ProMax
-        case .iPadPro: return .iPadPro
+        case .iPhone15ProMax: .iPhone15ProMax
+        case .iPadPro: .iPadPro
+        }
+    }
+
+    var frameImageName: String {
+        switch self {
+        case .iPhone15ProMax: "Apple iPhone 14 Pro Max Black.png"
+        case .iPadPro: "Apple iPhone 14 Pro Max Black.png" // TODO: Use correct device frame
         }
     }
 }
