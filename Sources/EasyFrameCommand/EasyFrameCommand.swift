@@ -132,8 +132,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     func getFrameImage(pixelSize: CGSize) throws -> NSImage {
-        guard let matchingDevice = LayoutOption.allCases.first(where: { layoutOption in
-            layoutOption.value.size == pixelSize
+        guard let matchingDevice = SupportedDevice.allCases.first(where: { device in
+            device.value.size == pixelSize
         }) else {
             throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
         }

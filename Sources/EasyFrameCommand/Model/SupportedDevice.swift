@@ -1,5 +1,5 @@
 //
-//  DeviceFrameView.swift
+//  SupportedDevice.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -7,9 +7,9 @@
 
 import ArgumentParser
 
-enum LayoutOption: String, CaseIterable, ExpressibleByArgument {
-    case iPhone15ProMax = "iPhone_15_pro"
-    case iPadPro = "ipad_pro"
+enum SupportedDevice: CaseIterable {
+    case iPhone15ProMax
+    case iPadPro
 
     var value: Layout {
         switch self {
