@@ -54,17 +54,17 @@ struct EasyFrameCommand: AsyncParsableCommand {
                         let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
                         let frameImage = try getFrameImage(pixelSize: screenshotImage.pixelSize)
 
-                        let frameData = FrameData(
+                        let frameViewModel = FrameViewModel(
                             screenshotImage: screenshotImage,
                             frameImage: frameImage,
                             screenshotCornerRadius: layout.cornerRadius,
                             frameOffset: layout.deviceFrameOffset
                         )
-                        let view = DeviceFrameView(frameData: frameData)
+                        let view = DeviceFrameView(viewModel: frameViewModel)
                         return try getNSImage(fromView: view, size: frameImage.size)
                     }
 
-                    let viewModel = ViewModel(
+                    let screenshotViewModel = ScreenshotViewModel(
                         title: language.title,
                         backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
                         framedScreenshots: framedScreenshots
@@ -72,7 +72,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                     let view = ScreenshotView(
                         layout: layout,
-                        content: viewModel,
+                        viewModel: screenshotViewModel,
                         locale: language.locale
                     )
                     let nsImage = try getNSImage(fromView: view, size: view.layout.size)

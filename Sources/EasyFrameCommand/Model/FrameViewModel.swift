@@ -1,5 +1,5 @@
 //
-//  FrameData.swift
+//  FrameViewModel.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FrameData {
+struct FrameViewModel {
     let screenshotImage: Image
     let screenshotSize: CGSize
     let screenshotCornerRadius: CGFloat

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScreenshotView: View {
     let layout: Layout
-    let content: ViewModel
+    let viewModel: ScreenshotViewModel
     let locale: String
 
     let orange = Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
@@ -26,14 +26,14 @@ struct ScreenshotView: View {
                 orange, orange, orange
             ])
 
-            if let backgroundImage = content.backgroundImage {
+            if let backgroundImage = viewModel.backgroundImage {
                 backgroundImage
                     .resizable()
                     .scaledToFit()
             }
 
             VStack(spacing: 0) {
-                Text(content.title)
+                Text(viewModel.title)
                     .font(.system(size: layout.titleFontSize))
                     .lineSpacing(10)
                     .kerning(3)
@@ -44,7 +44,7 @@ struct ScreenshotView: View {
                     .padding(layout.textInsets)
                     .frame(minHeight: 500)
 
-                content.framedScreenshots[0]
+                viewModel.framedScreenshots[0]
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: .infinity, alignment: .bottom)
@@ -58,7 +58,7 @@ struct ScreenshotView: View {
 #Preview {
     ScreenshotView(
         layout: .iPhone15ProMax,
-        content: ViewModel(
+        viewModel: ScreenshotViewModel(
             title: "My title",
             backgroundImage: NSImage(),
             framedScreenshots: []

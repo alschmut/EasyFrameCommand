@@ -1,5 +1,5 @@
 //
-//  DeviceFrameView.swift
+//  ScreenshotViewModel.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewModel {
+struct ScreenshotViewModel {
     let title: String
     let backgroundImage: Image?
     let framedScreenshots: [Image]
