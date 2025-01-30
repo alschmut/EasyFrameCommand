@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Layout: LayoutProvider {
+struct Layout {
     let size: CGSize
     let deviceFrameOffset: CGSize
     let cornerRadius: CGFloat
