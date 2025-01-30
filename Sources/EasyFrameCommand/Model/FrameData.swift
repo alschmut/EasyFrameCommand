@@ -32,11 +32,3 @@ struct FrameData {
     }
 }
 
-extension NSImage {
-
-    var pixelSize: CGSize {
-        let representation = representations[0]
-        return CGSize(width: representation.pixelsWide, height: representation.pixelsHigh)
-    }
-}
-
