@@ -17,12 +17,5 @@ enum SupportedDevice: CaseIterable {
         case .iPadPro: .iPadPro
         }
     }
-
-    var frameImageName: String {
-        switch self {
-        case .iPhone15ProMax: "Apple iPhone 14 Pro Max Black.png"
-        case .iPadPro: "Apple iPhone 14 Pro Max Black.png" // TODO: Use correct device frame
-        }
-    }
 }
 

@@ -1,5 +1,5 @@
 {
-    "appStoreScreens": [
+    "pages": [
         {
             "outputFileName": "1-tear-tales-calendar",
             "languages": [
@@ -8,7 +8,7 @@
                     "title": "Document your crying moments"
                 }
             ],
-            "screenshots": ["1-tear-tales-calendar", "2-tear-tales-list"]
+            "screenshotsSingleHero": ["1-tear-tales-calendar", "2-tear-tales-list"]
         },
         {
             "languages": [
@@ -17,7 +17,7 @@
                     "title": "List"
                 }
             ],
-            "screenshots": ["2-tear-tales-list"]
+            "screenshot": "2-tear-tales-list"
         },
         {
             "languages": [
@@ -26,7 +26,7 @@
                     "title": "Statistics"
                 }
             ],
-            "screenshots": ["3-statistics"]
+            "screenshot": "3-statistics"
         },
         {
             "languages": [
@@ -35,7 +35,7 @@
                     "title": "Add records"
                 }
             ],
-            "screenshots": ["4-add-record"]
+            "screenshot": "4-add-record"
         },
         {
             "languages": [
@@ -44,7 +44,7 @@
                     "title": "iCloud and more"
                 }
             ],
-            "screenshots": ["5-welcome-sheet"]
+            "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
@@ -53,7 +53,7 @@
                     "title": "Settings"
                 }
             ],
-            "screenshots": ["6-settings"]
+            "screenshot": "6-settings"
         }
     ]
 }

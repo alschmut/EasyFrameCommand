@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Layout {
+    let frameImagePath: String
     let size: CGSize
     let deviceFrameOffset: CGSize
     let cornerRadius: CGFloat
@@ -17,6 +18,7 @@ struct Layout {
     let textColor: Color
 
     static let iPhone15ProMax = Self(
+        frameImagePath: "Apple iPhone 14 Pro Max Black.png",
         size: CGSize(width: 1290, height: 2796),
         deviceFrameOffset: .zero,
         cornerRadius: 35,
@@ -27,6 +29,7 @@ struct Layout {
     )
 
     static let iPadPro = Self(
+        frameImagePath: "Apple iPhone 14 Pro Max Black.png", // TODO: Fix path
         size: CGSize(width: 2048, height: 2732),
         deviceFrameOffset: .zero,
         cornerRadius: 35,
