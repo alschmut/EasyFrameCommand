@@ -43,22 +43,22 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
 
                 switch page.type {
-                case .singleHero(let screenshots):
-                    try defaultScreenshotPage(
+                case .singleHero(let heroPage):
+                    try createSingleHeroScreenshotPage(
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
-                        screenshot: screenshots.first!
+                        heroPage: heroPage
                     )
-                case .doubleHero(let screenshots):
-                    try defaultScreenshotPage(
+                case .doubleHero(let heroPage):
+                    try createDefaultScreenshotPage(
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
-                        screenshot: screenshots.first!
+                        screenshot: heroPage.firstScreenshot
                     )
                 case .default(let screenshot):
-                    try defaultScreenshotPage(
+                    try createDefaultScreenshotPage(
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
@@ -70,7 +70,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     @MainActor
-    private func defaultScreenshotPage(
+    private func createDefaultScreenshotPage(
         language: LanguageConfig,
         screenshotsLocaleFolderURL: URL,
         outputFolderURL: URL,
@@ -80,6 +80,55 @@ struct EasyFrameCommand: AsyncParsableCommand {
             .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
             .filter { url in
                 url.lastPathComponent.contains(screenshot)
+            }
+            .forEach { screenshot in
+                let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
+                let layout = try getDeviceLayout(pixelSize: screenshotImage.pixelSize)
+                let frameImage = try getFrameImage(from: layout)
+
+                let frameViewModel = FrameViewModel(
+                    screenshotImage: screenshotImage,
+                    frameImage: frameImage,
+                    screenshotCornerRadius: layout.cornerRadius,
+                    frameOffset: layout.deviceFrameOffset
+                )
+                let deviceFrameView = DeviceFrameView(viewModel: frameViewModel)
+                let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
+
+                let screenshotViewModel = ScreenshotViewModel(
+                    title: language.title,
+                    backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
+                    framedScreenshots: [framedScreenshot]
+                )
+
+                let screenshotView = ScreenshotView(
+                    layout: layout,
+                    viewModel: screenshotViewModel,
+                    locale: language.locale
+                )
+                let nsImage = try getNSImage(fromView: screenshotView, size: layout.size)
+
+                try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
+                let fileName = screenshot
+                    .deletingPathExtension()
+                    .appendingPathExtension("jpg")
+                    .lastPathComponent
+                let outputFileURL = outputFolderURL.appendingPathComponent(fileName)
+                try saveFile(nsImage: nsImage, outputPath: outputFileURL.relativePath)
+            }
+    }
+
+    @MainActor
+    private func createSingleHeroScreenshotPage(
+        language: LanguageConfig,
+        screenshotsLocaleFolderURL: URL,
+        outputFolderURL: URL,
+        heroPage: HeroPage
+    ) throws {
+        try FileManager.default
+            .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
+            .filter { url in
+                url.lastPathComponent.contains(heroPage.firstScreenshot)
             }
             .forEach { screenshot in
                 let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)

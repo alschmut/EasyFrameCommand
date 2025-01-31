@@ -3,55 +3,46 @@
         {
             "outputFileName": "1-tear-tales-calendar",
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "Document your crying moments"
-                }
+                { "locale": "en-GB", "title": "Document your crying moments" },
+                { "locale": "de-DE", "title": "Documentiere deine Weinmoment" }
             ],
-            "screenshotsSingleHero": ["1-tear-tales-calendar", "2-tear-tales-list"]
+            "screenshotsSingleHero": {
+                "firstScreenshot": "1-tear-tales-calendar",
+                "additionalScreenshots": ["2-tear-tales-list"]
+            }
         },
         {
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "List"
-                }
+                { "locale": "en-GB", "title": "List" },
+                { "locale": "de-DE", "title": "Liste" }
             ],
             "screenshot": "2-tear-tales-list"
         },
         {
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "Statistics"
-                }
+                { "locale": "en-GB", "title": "Statistics" },
+                { "locale": "de-DE", "title": "Statistiken" }
             ],
             "screenshot": "3-statistics"
         },
         {
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "Add records"
-                }
+                { "locale": "en-GB", "title": "Add records" },
+                { "locale": "de-DE", "title": "Einträge hinzufügen" }
             ],
             "screenshot": "4-add-record"
         },
         {
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "iCloud and more"
-                }
+                { "locale": "en-GB", "title": "iCloud and more" },
+                { "locale": "de-DE", "title": "iCloud und mehr" }
             ],
             "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
-                {
-                    "locale": "en-GB",
-                    "title": "Settings"
-                }
+                { "locale": "en-GB", "title": "Settings" },
+                { "locale": "de-DE", "title": "Einstellungen" }
             ],
             "screenshot": "6-settings"
         }
