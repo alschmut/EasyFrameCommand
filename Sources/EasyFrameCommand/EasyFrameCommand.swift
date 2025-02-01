@@ -36,7 +36,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
         let easyFrameConfig = try getEasyFrameConfig(screenshotsFolderURL: screenshotsFolderURL)
 
-        try easyFrameConfig.pages.forEach { page in
+        try easyFrameConfig.pages.enumerated().forEach { pageIndex, page in
             try page.languages.forEach { language in
 
                 let screenshotsLocaleFolderURL = screenshotsFolderURL.appendingPathComponent(language.locale)
@@ -45,6 +45,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 switch page.type {
                 case .singleHero(let heroPage):
                     try createSingleHeroScreenshotPage(
+                        pageIndex: pageIndex,
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
@@ -52,6 +53,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     )
                 case .doubleHero(let heroPage):
                     try createDefaultScreenshotPage(
+                        pageIndex: pageIndex,
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
@@ -59,6 +61,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     )
                 case .default(let screenshot):
                     try createDefaultScreenshotPage(
+                        pageIndex: pageIndex,
                         language: language,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
@@ -71,6 +74,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @MainActor
     private func createDefaultScreenshotPage(
+        pageIndex: Int,
         language: LanguageConfig,
         screenshotsLocaleFolderURL: URL,
         outputFolderURL: URL,
@@ -96,6 +100,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
 
                 let screenshotViewModel = ScreenshotViewModel(
+                    pageIndex: pageIndex,
                     title: language.title,
                     description: language.description,
                     backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
@@ -121,6 +126,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @MainActor
     private func createSingleHeroScreenshotPage(
+        pageIndex: Int,
         language: LanguageConfig,
         screenshotsLocaleFolderURL: URL,
         outputFolderURL: URL,
@@ -146,6 +152,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
 
                 let screenshotViewModel = ScreenshotViewModel(
+                    pageIndex: pageIndex,
                     title: language.title,
                     description: language.description,
                     backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
