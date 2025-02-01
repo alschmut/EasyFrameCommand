@@ -33,63 +33,45 @@ struct ScreenshotView: View {
             }
 
             VStack(spacing: 0) {
-                VStack(spacing: layout.size.height / 75) {
+                VStack(spacing: layout.relative(37)) {
                     Text(viewModel.title)
-                        .font(.system(size: titleFontSize))
-                        .lineSpacing(lineSpacing(fontSize: titleFontSize))
-                        .kerning(kerning(fontSize: titleFontSize))
+                        .font(.system(size: layout.relative(96)))
+                        .lineSpacing(layout.relative(96) / 7)
+                        .kerning(layout.relative(96) / 30)
                         .fontWeight(.bold)
 
                     if !viewModel.description.isEmpty {
                         Text(viewModel.description)
-                            .font(.system(size: descriptionFontSize))
-                            .lineSpacing(lineSpacing(fontSize: descriptionFontSize))
-                            .kerning(kerning(fontSize: descriptionFontSize))
+                            .font(.system(size: layout.relative(62)))
+                            .lineSpacing(layout.relative(62) / 7)
+                            .kerning(layout.relative(62) / 30)
                             .fontWeight(.light)
-                            .padding(.horizontal, layout.size.height / 80)
+                            .padding(.horizontal, layout.relative(35))
                     }
                 }
                 .foregroundStyle(layout.textColor)
                 .multilineTextAlignment(.center)
-                .padding(layout.textInsets)
+                .padding(.horizontal, layout.relative(15))
                 .frame(height: titleFrameHeight)
 
                 viewModel.framedScreenshots[0]
                     .resizable()
                     .scaledToFit()
                     .shadow(radius: 20)
-                    .padding(layout.imageInsets)
+                    .padding(.bottom, layout.relative(80))
                     .frame(height: screenshotFrameHeight)
             }
         }
         .environment(\.locale, Locale(identifier: locale))
     }
 
-    var titleFrameHeight: CGFloat {
+    private var titleFrameHeight: CGFloat {
         layout.size.height * 0.2
     }
 
-    var screenshotFrameHeight: CGFloat {
+    private var screenshotFrameHeight: CGFloat {
         layout.size.height - titleFrameHeight
     }
-
-    var titleFontSize: CGFloat {
-        layout.size.height / 29
-    }
-
-    var descriptionFontSize: CGFloat {
-        layout.size.height / 45
-    }
-
-    func lineSpacing(fontSize: CGFloat) -> CGFloat {
-        fontSize / 7
-    }
-
-    func kerning(fontSize: CGFloat) -> CGFloat {
-        fontSize / 30
-    }
-
-
 }
 
 #Preview {

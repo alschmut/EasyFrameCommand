@@ -4,7 +4,9 @@
             "outputFileName": "1-tear-tales-calendar",
             "languages": [
                 { "locale": "en-GB", "title": "Tear Tales", "description": "Your private diary\nof crying moments" },
-                { "locale": "de-DE", "title": "Dokumentiere deine Weinmoment", "description": "" }
+                { "locale": "de-DE", "title": "Tear Tales", "description": "Dein privates Tagebuch\ntrauriger Momente" },
+                { "locale": "fr-FR", "title": "Tear Tales", "description": "Ton journal intime\ndes moments de pleurs" },
+                { "locale": "es-ES", "title": "Tear Tales", "description": "Tu diario privado\nde momentos de llanto" }
             ],
             "screenshotsSingleHero": {
                 "firstScreenshot": "1-tear-tales-calendar",
@@ -14,35 +16,45 @@
         {
             "languages": [
                 { "locale": "en-GB", "title": "List all records", "description": "Reflect by reading\nyour past records" },
-                { "locale": "de-DE", "title": "Liste", "description": "" }
+                { "locale": "de-DE", "title": "Alle Einträge anzeigen", "description": "Reflektiere, indem du\ndeine vergangenen Einträge liest" },
+                { "locale": "fr-FR", "title": "Lister tous les enregistrements", "description": "Réfléchis en lisant\ntes anciens enregistrements" },
+                { "locale": "es-ES", "title": "Lista de registros", "description": "Reflexiona leyendo\ntus registros pasados" }
             ],
             "screenshot": "2-tear-tales-list"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Detect patterns", "description": "Filter by month,\nintensity and tags" },
-                { "locale": "de-DE", "title": "Statistiken", "description": "" }
+                { "locale": "de-DE", "title": "Muster erkennen", "description": "Filtere nach Monat,\nIntensität und Tags" },
+                { "locale": "fr-FR", "title": "Détecter des tendances", "description": "Filtre par mois,\nintensité et tags" },
+                { "locale": "es-ES", "title": "Detectar patrones", "description": "Filtra por mes,\nintensidad y etiquetas" }
             ],
             "screenshot": "3-statistics"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Capture your tears", "description": "Add new records\nwith intensity and tags" },
-                { "locale": "de-DE", "title": "Einträge hinzufügen", "description": "" }
+                { "locale": "de-DE", "title": "Tränen festhalten", "description": "Füge neue Einträge hinzu\nmit Intensität und Tags" },
+                { "locale": "fr-FR", "title": "Capture tes larmes", "description": "Ajoute de nouveaux enregistrements\navec intensité et tags" },
+                { "locale": "es-ES", "title": "Captura tus lágrimas", "description": "Añade nuevos registros\ncon intensidad y etiquetas" }
             ],
             "screenshot": "4-add-record"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Synced via iCloud", "description": "Your records are up to date\non all your devices" },
-                { "locale": "de-DE", "title": "iCloud und mehr", "description": "" }
+                { "locale": "de-DE", "title": "Synchronisiert mit iCloud", "description": "Deine Einträge sind\nauf all deinen Geräten aktuell" },
+                { "locale": "fr-FR", "title": "Synchronisé avec iCloud", "description": "Tes enregistrements sont\nà jour sur tous tes appareils" },
+                { "locale": "es-ES", "title": "Sincronizado con iCloud", "description": "Tus registros están actualizados\nen todos tus dispositivos" }
             ],
             "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Export your records", "description": "Import or export\nyour personal records*" },
-                { "locale": "de-DE", "title": "Einstellungen", "description": "" }
+                { "locale": "de-DE", "title": "Exportiere deine Einträge", "description": "Importiere oder exportiere\ndeine persönlichen Einträge*" },
+                { "locale": "fr-FR", "title": "Exporte tes enregistrements", "description": "Importe ou exporte\ntes enregistrements personnels*" },
+                { "locale": "es-ES", "title": "Exporta tus registros", "description": "Importa o exporta\ntus registros personales*" }
             ],
             "screenshot": "6-settings"
         }
