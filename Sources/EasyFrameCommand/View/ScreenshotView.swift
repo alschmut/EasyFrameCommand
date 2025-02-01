@@ -47,6 +47,7 @@ struct ScreenshotView: View {
                 viewModel.framedScreenshots[0]
                     .resizable()
                     .scaledToFit()
+                    .shadow(radius: 20)
                     .padding(layout.imageInsets)
                     .frame(height: screenshotFrameHeight)
             }
