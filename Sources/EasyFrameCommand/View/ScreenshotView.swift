@@ -33,16 +33,26 @@ struct ScreenshotView: View {
             }
 
             VStack(spacing: 0) {
-                Text(viewModel.title)
-                    .font(.system(size: titleFontSize))
-                    .lineSpacing(titleLineSpacing)
-                    .kerning(titleKerning)
-                    .fontWeight(.bold)
-                    .fontDesign(.default)
-                    .foregroundStyle(layout.textColor)
-                    .multilineTextAlignment(.center)
-                    .padding(layout.textInsets)
-                    .frame(height: titleFrameHeight)
+                VStack(spacing: layout.size.height / 75) {
+                    Text(viewModel.title)
+                        .font(.system(size: titleFontSize))
+                        .lineSpacing(lineSpacing(fontSize: titleFontSize))
+                        .kerning(kerning(fontSize: titleFontSize))
+                        .fontWeight(.bold)
+
+                    if !viewModel.description.isEmpty {
+                        Text(viewModel.description)
+                            .font(.system(size: descriptionFontSize))
+                            .lineSpacing(lineSpacing(fontSize: descriptionFontSize))
+                            .kerning(kerning(fontSize: descriptionFontSize))
+                            .fontWeight(.light)
+                            .padding(.horizontal, layout.size.height / 80)
+                    }
+                }
+                .foregroundStyle(layout.textColor)
+                .multilineTextAlignment(.center)
+                .padding(layout.textInsets)
+                .frame(height: titleFrameHeight)
 
                 viewModel.framedScreenshots[0]
                     .resizable()
@@ -56,7 +66,7 @@ struct ScreenshotView: View {
     }
 
     var titleFrameHeight: CGFloat {
-        layout.size.height * 0.15
+        layout.size.height * 0.2
     }
 
     var screenshotFrameHeight: CGFloat {
@@ -64,16 +74,22 @@ struct ScreenshotView: View {
     }
 
     var titleFontSize: CGFloat {
-        layout.titleFontSize ?? layout.size.height / 31
+        layout.size.height / 29
     }
 
-    var titleLineSpacing: CGFloat {
-        layout.lineSpacing ?? titleFontSize / 9
+    var descriptionFontSize: CGFloat {
+        layout.size.height / 45
     }
 
-    var titleKerning: CGFloat {
-        layout.lineSpacing ?? titleFontSize / 30
+    func lineSpacing(fontSize: CGFloat) -> CGFloat {
+        fontSize / 7
     }
+
+    func kerning(fontSize: CGFloat) -> CGFloat {
+        fontSize / 30
+    }
+
+
 }
 
 #Preview {
@@ -81,6 +97,7 @@ struct ScreenshotView: View {
         layout: .iPhone15ProMax,
         viewModel: ScreenshotViewModel(
             title: "My title",
+            description: "My description",
             backgroundImage: NSImage(),
             framedScreenshots: []
         ),

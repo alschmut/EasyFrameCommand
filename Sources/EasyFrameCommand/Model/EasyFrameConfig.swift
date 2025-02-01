@@ -44,6 +44,7 @@ struct PageConfig: Decodable {
 struct LanguageConfig: Decodable {
     let locale: String
     let title: String
+    let description: String
 }
 
 enum PageType: Decodable {

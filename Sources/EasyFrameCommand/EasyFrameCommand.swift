@@ -97,6 +97,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                 let screenshotViewModel = ScreenshotViewModel(
                     title: language.title,
+                    description: language.description,
                     backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
                     framedScreenshots: [framedScreenshot]
                 )
@@ -146,6 +147,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                 let screenshotViewModel = ScreenshotViewModel(
                     title: language.title,
+                    description: language.description,
                     backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
                     framedScreenshots: [framedScreenshot]
                 )

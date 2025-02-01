@@ -3,8 +3,8 @@
         {
             "outputFileName": "1-tear-tales-calendar",
             "languages": [
-                { "locale": "en-GB", "title": "Keep track of your tears" },
-                { "locale": "de-DE", "title": "Dokumentiere deine Weinmoment" }
+                { "locale": "en-GB", "title": "Keep track", "description": "Check your calendar\nand find patterns" },
+                { "locale": "de-DE", "title": "Dokumentiere deine Weinmoment", "description": "" }
             ],
             "screenshotsSingleHero": {
                 "firstScreenshot": "1-tear-tales-calendar",
@@ -13,36 +13,36 @@
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "List all records" },
-                { "locale": "de-DE", "title": "Liste" }
+                { "locale": "en-GB", "title": "List all records", "description": "Go back in time\nand reflect" },
+                { "locale": "de-DE", "title": "Liste", "description": "" }
             ],
             "screenshot": "2-tear-tales-list"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Detect your patterns" },
-                { "locale": "de-DE", "title": "Statistiken" }
+                { "locale": "en-GB", "title": "Detect patterns", "description": "Filter by month,\nintensity and tags" },
+                { "locale": "de-DE", "title": "Statistiken", "description": "" }
             ],
             "screenshot": "3-statistics"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Capture your tears" },
-                { "locale": "de-DE", "title": "Einträge hinzufügen" }
+                { "locale": "en-GB", "title": "Capture your tears", "description": "Add new records\nwith intensity and tags" },
+                { "locale": "de-DE", "title": "Einträge hinzufügen", "description": "" }
             ],
             "screenshot": "4-add-record"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Synced via iCloud" },
-                { "locale": "de-DE", "title": "iCloud und mehr" }
+                { "locale": "en-GB", "title": "Synced via iCloud", "description": "Your records are secure\nand always up to date" },
+                { "locale": "de-DE", "title": "iCloud und mehr", "description": "" }
             ],
             "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Export your records" },
-                { "locale": "de-DE", "title": "Einstellungen" }
+                { "locale": "en-GB", "title": "Export your records", "description": "Import or export\nwhat is yours*" },
+                { "locale": "de-DE", "title": "Einstellungen", "description": "" }
             ],
             "screenshot": "6-settings"
         }

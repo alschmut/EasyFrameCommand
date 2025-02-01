@@ -14,8 +14,6 @@ struct Layout {
     let cornerRadius: CGFloat
     let textInsets: EdgeInsets
     let imageInsets: EdgeInsets
-    var titleFontSize: CGFloat?
-    var lineSpacing: CGFloat?
     let textColor: Color
 
     static let iPhone15ProMax = Self(
