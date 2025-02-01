@@ -3,7 +3,7 @@
         {
             "outputFileName": "1-tear-tales-calendar",
             "languages": [
-                { "locale": "en-GB", "title": "Keep track", "description": "Check your calendar\nand find patterns" },
+                { "locale": "en-GB", "title": "Tear Tales", "description": "Your private diary\nof crying moments" },
                 { "locale": "de-DE", "title": "Dokumentiere deine Weinmoment", "description": "" }
             ],
             "screenshotsSingleHero": {
@@ -13,7 +13,7 @@
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "List all records", "description": "Go back in time\nand reflect" },
+                { "locale": "en-GB", "title": "List all records", "description": "Reflect by reading\nyour past records" },
                 { "locale": "de-DE", "title": "Liste", "description": "" }
             ],
             "screenshot": "2-tear-tales-list"
@@ -34,14 +34,14 @@
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Synced via iCloud", "description": "Your records are secure\nand always up to date" },
+                { "locale": "en-GB", "title": "Synced via iCloud", "description": "Your records are up to date\non all your devices" },
                 { "locale": "de-DE", "title": "iCloud und mehr", "description": "" }
             ],
             "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Export your records", "description": "Import or export\nwhat is yours*" },
+                { "locale": "en-GB", "title": "Export your records", "description": "Import or export\nyour personal records*" },
                 { "locale": "de-DE", "title": "Einstellungen", "description": "" }
             ],
             "screenshot": "6-settings"
