@@ -14,39 +14,37 @@ struct Layout {
     let cornerRadius: CGFloat
     let textInsets: EdgeInsets
     let imageInsets: EdgeInsets
-    let titleFontSize: CGFloat
+    var titleFontSize: CGFloat?
+    var lineSpacing: CGFloat?
     let textColor: Color
 
     static let iPhone15ProMax = Self(
         frameImagePath: "Apple iPhone 14 Pro Max Black.png",
         size: CGSize(width: 1290, height: 2796),
-        deviceFrameOffset: .zero,
+        deviceFrameOffset: .init(width: 0, height: 2),
         cornerRadius: 35,
         textInsets: EdgeInsets(top: 0, leading: 100, bottom: 0, trailing: 100),
         imageInsets: EdgeInsets(top: 0, leading: 0, bottom: 80, trailing: 0),
-        titleFontSize: 90,
         textColor: .white
     )
 
     static let iPadPro = Self(
-        frameImagePath: "Apple iPhone 14 Pro Max Black.png", // TODO: Fix path
+        frameImagePath: "Apple iPad Pro (12.9-inch) (4th generation) Space Gray.png",
         size: CGSize(width: 2048, height: 2732),
-        deviceFrameOffset: .zero,
+        deviceFrameOffset: .init(width: 2, height: 0),
         cornerRadius: 35,
-        textInsets: EdgeInsets(top: 48, leading: 96, bottom: 0, trailing: 96),
-        imageInsets: EdgeInsets(top: 0, leading: 150, bottom: -200, trailing: 150),
-        titleFontSize: 148,
+        textInsets: EdgeInsets(top: 0, leading: 100, bottom: 0, trailing: 100),
+        imageInsets: EdgeInsets(top: 0, leading: 0, bottom: 80, trailing: 0),
         textColor: .white
     )
 
     static let iPhoneSE3rdGen = Self(
         frameImagePath: "Apple iPhone SE Black.png",
         size: CGSize(width: 750, height: 1334),
-        deviceFrameOffset: .zero,
+        deviceFrameOffset: .init(width: 0, height: 2),
         cornerRadius: 0,
-        textInsets: EdgeInsets(top: 48, leading: 96, bottom: 0, trailing: 96),
-        imageInsets: EdgeInsets(top: 0, leading: 150, bottom: -200, trailing: 150),
-        titleFontSize: 148,
+        textInsets: EdgeInsets(top: 0, leading: 100, bottom: 0, trailing: 100),
+        imageInsets: EdgeInsets(top: 0, leading: 0, bottom: 40, trailing: 0),
         textColor: .white
     )
 }

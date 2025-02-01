@@ -34,24 +34,44 @@ struct ScreenshotView: View {
 
             VStack(spacing: 0) {
                 Text(viewModel.title)
-                    .font(.system(size: layout.titleFontSize))
-                    .lineSpacing(10)
-                    .kerning(3)
+                    .font(.system(size: titleFontSize))
+                    .lineSpacing(titleLineSpacing)
+                    .kerning(titleKerning)
                     .fontWeight(.bold)
-                    .fontDesign(.serif)
+                    .fontDesign(.default)
                     .foregroundStyle(layout.textColor)
                     .multilineTextAlignment(.center)
                     .padding(layout.textInsets)
-                    .frame(minHeight: 500)
+                    .frame(height: titleFrameHeight)
 
                 viewModel.framedScreenshots[0]
                     .resizable()
                     .scaledToFit()
-                    .frame(maxHeight: .infinity, alignment: .bottom)
                     .padding(layout.imageInsets)
+                    .frame(height: screenshotFrameHeight)
             }
         }
         .environment(\.locale, Locale(identifier: locale))
+    }
+
+    var titleFrameHeight: CGFloat {
+        layout.size.height * 0.15
+    }
+
+    var screenshotFrameHeight: CGFloat {
+        layout.size.height - titleFrameHeight
+    }
+
+    var titleFontSize: CGFloat {
+        layout.titleFontSize ?? layout.size.height / 31
+    }
+
+    var titleLineSpacing: CGFloat {
+        layout.lineSpacing ?? titleFontSize / 9
+    }
+
+    var titleKerning: CGFloat {
+        layout.lineSpacing ?? titleFontSize / 30
     }
 }
 
