@@ -43,7 +43,7 @@ struct Layout {
         frameImagePath: "Apple iPhone SE Black.png",
         size: CGSize(width: 750, height: 1334),
         deviceFrameOffset: .zero,
-        cornerRadius: 35,
+        cornerRadius: 0,
         textInsets: EdgeInsets(top: 48, leading: 96, bottom: 0, trailing: 96),
         imageInsets: EdgeInsets(top: 0, leading: 150, bottom: -200, trailing: 150),
         titleFontSize: 148,
