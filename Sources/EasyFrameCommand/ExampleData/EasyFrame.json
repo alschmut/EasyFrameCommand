@@ -5,7 +5,7 @@
             "languages": [
                 { "locale": "en-GB", "title": "Tear Tales", "description": "Your private diary" },
                 { "locale": "de-DE", "title": "Tear Tales", "description": "Dein privates Tagebuch" },
-                { "locale": "fr-FR", "title": "Tear Tales", "description": "Ton journal intime" },
+                { "locale": "fr-FR", "title": "Tear Tales", "description": "Votre journal privé" },
                 { "locale": "es-ES", "title": "Tear Tales", "description": "Tu diario privado" }
             ],
             "screenshotsSingleHero": {
@@ -15,10 +15,10 @@
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "List records", "description": "Reflect upon your past" },
-                { "locale": "de-DE", "title": "Einträge anzeigen", "description": "Reflektiere über deine Vergangenheit" },
-                { "locale": "fr-FR", "title": "Lister les enregistrements", "description": "Repense à tes anciens moments" },
-                { "locale": "es-ES", "title": "Listar los registros", "description": "Reflexiona sobre tu pasado" }
+                { "locale": "en-GB", "title": "List all records", "description": "Reflect on your past" },
+                { "locale": "de-DE", "title": "Einträge anzeigen", "description": "Reflektiere über Vergangenes" },
+                { "locale": "fr-FR", "title": "Lister enregistrements", "description": "Revoyez vos souvenirs" },
+                { "locale": "es-ES", "title": "Revisa tus datos", "description": "Reflexiona sobre tu pasado" }
             ],
             "screenshot": "2-tear-tales-list"
         },
@@ -26,35 +26,35 @@
             "languages": [
                 { "locale": "en-GB", "title": "Detect patterns", "description": "Filter by intensity and tags" },
                 { "locale": "de-DE", "title": "Muster erkennen", "description": "Filter nach Intensität und Tags" },
-                { "locale": "fr-FR", "title": "Détecter des tendances", "description": "Filtrer par intensité et tags" },
-                { "locale": "es-ES", "title": "Detectar patrones", "description": "Filtra por intensidad y etiquetas" }
+                { "locale": "fr-FR", "title": "Détecter tendances", "description": "Filtrer par intensité et tags" },
+                { "locale": "es-ES", "title": "Detecta patrones", "description": "Filtra por intensidad y etiquetas" }
             ],
             "screenshot": "3-statistics"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Capture your tears", "description": "With intensity, a note and tags" },
-                { "locale": "de-DE", "title": "Tränen festhalten", "description": "Mit Intensität einer Notiz und Tags" },
-                { "locale": "fr-FR", "title": "Capture tes larmes", "description": "Ajoute une note et des tags" },
-                { "locale": "es-ES", "title": "Captura tus lágrimas", "description": "Añade nota, intensidad y etiquetas" }
+                { "locale": "en-GB", "title": "Capture your tears", "description": "With intensity, note and tags" },
+                { "locale": "de-DE", "title": "Einträge hinzufügen", "description": "Mit Intensität, Notiz und Tags" },
+                { "locale": "fr-FR", "title": "Capturez vos larmes", "description": "Avec intensité, note & tags" },
+                { "locale": "es-ES", "title": "Captura tus lágrimas", "description": "Con intensidad, nota y etiquetas" }
             ],
             "screenshot": "4-add-record"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Synced via iCloud", "description": "Up to date on all your devices" },
-                { "locale": "de-DE", "title": "Synchronisiert mit iCloud", "description": "Immer aktuell auf allen Geräten" },
-                { "locale": "fr-FR", "title": "Synchronisé avec iCloud", "description": "À jour sur tous tes appareils" },
-                { "locale": "es-ES", "title": "Sincronizado con iCloud", "description": "Siempre actualizado en tus dispositivos" }
+                { "locale": "en-GB", "title": "Synced via iCloud", "description": "Up to date on all devices" },
+                { "locale": "de-DE", "title": "In sync mit iCloud", "description": "Immer aktuell auf allen Geräten" },
+                { "locale": "fr-FR", "title": "Synchronisé via iCloud", "description": "Toujours à jour" },
+                { "locale": "es-ES", "title": "Sincronizado via iCloud", "description": "Siempre actualizado" }
             ],
             "screenshot": "5-welcome-sheet"
         },
         {
             "languages": [
-                { "locale": "en-GB", "title": "Export records", "description": "Import or export your data*" },
-                { "locale": "de-DE", "title": "Einträge exportieren", "description": "Daten importieren oder exportieren*" },
-                { "locale": "fr-FR", "title": "Exporte tes enregistrements", "description": "Importe ou exporte tes données*" },
-                { "locale": "es-ES", "title": "Exporta tus registros", "description": "Importa o exporta tus datos*" }
+                { "locale": "en-GB", "title": "Own your data", "description": "Import or export your records*" },
+                { "locale": "de-DE", "title": "Besitze deine Daten", "description": "Daten importieren/exportieren*" },
+                { "locale": "fr-FR", "title": "Contrôlez vos données", "description": "Importez/exportez vos données*" },
+                { "locale": "es-ES", "title": "Controla tus datos", "description": "Importa o exporta tus registros*" }
             ],
             "screenshot": "6-settings"
         }
