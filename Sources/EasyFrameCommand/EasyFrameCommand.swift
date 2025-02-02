@@ -31,8 +31,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
     @MainActor
     mutating func run() async throws {
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
-        let rawScreenshotsFolderURL = rootFolderURL.appendingPathComponent("screenshots")
-        let outputFolderURL = rootFolderURL.appendingPathComponent("framed_screenshots")
+        let rawScreenshotsFolderURL = rootFolderURL.appendingPathComponent("raw-screenshots")
+        let outputFolderURL = rootFolderURL.appendingPathComponent("screenshots")
 
         let easyFrameConfig = try getEasyFrameConfig(rawScreenshotsFolderURL: rawScreenshotsFolderURL)
 
