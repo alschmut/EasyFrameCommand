@@ -12,39 +12,9 @@ struct ScreenshotView: View {
     let viewModel: ScreenshotViewModel
     let locale: String
 
-    let orange = Color(red: 251 / 255, green: 133 / 255, blue: 0 / 255)
-    let blue = Color(red: 30 / 255, green: 85 / 255, blue: 125 / 255)
-    let purple = Color.purple
-
-    var colors: [Color] {
-        if viewModel.pageIndex % 3 == 0 {
-            return [
-                purple, purple, blue,
-                orange, orange, purple,
-                orange, orange, orange
-            ]
-        } else if viewModel.pageIndex % 3 == 1 {
-            return [
-                blue, purple, purple,
-                purple, orange, blue,
-                orange, orange, orange
-            ]
-        } else {
-            return [
-                purple, purple, purple,
-                blue, orange, orange,
-                orange, orange, orange
-            ]
-        }
-    }
-
     var body: some View {
         ZStack {
-            MeshGradient(width: 3, height: 3, points: [
-                .init(0, 0), .init(0.5, 0), .init(1, 0),
-                .init(0, 0.5), .init(0.5, 0.5), .init(1, 0.5),
-                .init(0, 1), .init(0.5, 1), .init(1, 1)
-            ], colors: colors)
+            CustomBackgroundView(pageIndex: viewModel.pageIndex)
 
             if let backgroundImage = viewModel.backgroundImage {
                 backgroundImage
