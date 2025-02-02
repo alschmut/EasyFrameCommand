@@ -24,40 +24,31 @@ parent-folder/
             iPhone 15 Pro Max-1-calendar.png
             iPhone 15 Pro Max-2-list.png
             iPhone 15 Pro Max-3-add-entry.png
-            iPhone 15 Pro Max-4-settings.png
             iPad Pro (12.9-inch) (6th generation)-1-calendar.png
             iPad Pro (12.9-inch) (6th generation)-2-list.png
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.png
-            iPad Pro (12.9-inch) (6th generation)-4-settings.png
         en-GB/
             iPhone 15 Pro Max-1-calendar.png
             iPhone 15 Pro Max-2-list.png
             iPhone 15 Pro Max-3-add-entry.png
-            iPhone 15 Pro Max-4-settings.png
             iPad Pro (12.9-inch) (6th generation)-1-calendar.png
             iPad Pro (12.9-inch) (6th generation)-2-list.png
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.png
-            iPad Pro (12.9-inch) (6th generation)-4-settings.png
     screenshots/ (this folder will be created by easy-frame)
         de-DE/
             iPhone 15 Pro Max-1-calendar.jpg
             iPhone 15 Pro Max-2-list.jpg
             iPhone 15 Pro Max-3-add-entry.jpg
-            iPhone 15 Pro Max-4-settings.jpg
             iPad Pro (12.9-inch) (6th generation)-1-calendar.jpg
             iPad Pro (12.9-inch) (6th generation)-2-list.jpg
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.jpg
-            iPad Pro (12.9-inch) (6th generation)-4-settings.jpg
         en-GB/
             iPhone 15 Pro Max-1-calendar.jpg
             iPhone 15 Pro Max-2-list.jpg
             iPhone 15 Pro Max-3-add-entry.jpg
-            iPhone 15 Pro Max-4-settings.jpg
             iPad Pro (12.9-inch) (6th generation)-1-calendar.jpg
             iPad Pro (12.9-inch) (6th generation)-2-list.jpg
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.jpg
-            iPad Pro (12.9-inch) (6th generation)-4-settings.jpg
-        
 ```
 
 ```json
@@ -69,24 +60,21 @@ parent-folder/
                 { "locale": "en-GB", "title": "Title 1 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 1 DE", "description": "Description" }
             ],
-            "screenshotsSingleHero": {
-                "firstScreenshot": "1-calendar",
-                "additionalScreenshots": ["2-list"]
-            }
+            "screenshot": "1-calendar"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Title 2 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 2 DE", "description": "Description" }
             ],
-            "screenshot": "3-add-entry"
+            "screenshot": "2-list"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Title 3 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 3 DE", "description": "Description" }
             ],
-            "screenshot": "4-settings"
+            "screenshot": "3-add-entry"
         }
     ]
 }
