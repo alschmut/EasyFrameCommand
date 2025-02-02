@@ -54,30 +54,32 @@ struct ScreenshotView: View {
 
             VStack(spacing: 0) {
                 VStack(spacing: layout.relative(37)) {
+                    let titleFontSize: CGFloat = 110
                     Text(viewModel.title)
-                        .font(.system(size: layout.relative(96)))
-                        .lineSpacing(layout.relative(96) / 7)
-                        .kerning(layout.relative(96) / 30)
+                        .font(.system(size: layout.relative(titleFontSize)))
+                        .lineSpacing(layout.relative(titleFontSize) / 7)
+                        .kerning(layout.relative(titleFontSize) / 30)
                         .fontWeight(.bold)
 
                     if !viewModel.description.isEmpty {
+                        let descriptionFontSize: CGFloat = 75
                         Text(viewModel.description)
-                            .font(.system(size: layout.relative(62)))
-                            .lineSpacing(layout.relative(62) / 7)
-                            .kerning(layout.relative(62) / 30)
+                            .font(.system(size: layout.relative(descriptionFontSize)))
+                            .lineSpacing(layout.relative(descriptionFontSize) / 7)
+                            .kerning(layout.relative(descriptionFontSize) / 30)
                             .fontWeight(.light)
                             .padding(.horizontal, layout.relative(35))
                     }
                 }
                 .foregroundStyle(layout.textColor)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, layout.relative(15))
+                .padding(.horizontal, layout.relative(10))
                 .frame(height: titleFrameHeight)
 
                 viewModel.framedScreenshots[0]
                     .resizable()
                     .scaledToFit()
-                    .shadow(radius: 20)
+                    .shadow(radius: layout.relative(20))
                     .padding(.bottom, layout.relative(80))
                     .frame(height: screenshotFrameHeight)
             }
