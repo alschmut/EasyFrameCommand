@@ -16,12 +16,6 @@ struct ScreenshotView: View {
         ZStack {
             CustomBackgroundView(pageIndex: viewModel.pageIndex)
 
-            if let backgroundImage = viewModel.backgroundImage {
-                backgroundImage
-                    .resizable()
-                    .scaledToFit()
-            }
-
             VStack(spacing: 0) {
                 VStack(spacing: layout.relative(37)) {
                     let titleFontSize: CGFloat = 110
@@ -73,7 +67,6 @@ struct ScreenshotView: View {
             pageIndex: 0,
             title: "My title",
             description: "My description",
-            backgroundImage: NSImage(),
             framedScreenshots: []
         ),
         locale: "en-GB"

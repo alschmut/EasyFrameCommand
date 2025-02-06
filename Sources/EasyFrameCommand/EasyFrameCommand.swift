@@ -16,13 +16,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @Option(
         name: .shortAndLong,
-        help: "An absolute or relative path to the image to be shown as background",
-        completion: .file()
-    )
-    var backgroundImage: String?
-
-    @Option(
-        name: .shortAndLong,
         help: "An absolute or relative path to the root folder, which contains the individual folder for the locales and the EasyFrame.json file",
         completion: .file()
     )
@@ -87,7 +80,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     pageIndex: pageIndex,
                     title: language.title,
                     description: language.description,
-                    backgroundImage: try backgroundImage.map { try getNSImage(fromPath: $0) },
                     framedScreenshots: [framedScreenshot]
                 )
 
