@@ -14,9 +14,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
         CommandConfiguration(commandName: "easy-frame")
     }
 
-    @Option(
-        name: .shortAndLong,
-        help: "An absolute or relative path to the root folder, which contains the individual folder for the locales and the EasyFrame.json file",
+    @Argument(
+        help: "An absolute or relative path to the parent folder, which contains the EasyFrame.json file and a raw-screeshots folder with individual locale folders",
         completion: .file()
     )
     var rootFolder: String

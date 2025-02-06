@@ -11,7 +11,7 @@ This swift package is meant to be forked and adjusted for individual use. This a
 -   Run the local `easy-frame` CLI command via the below command:
     ```sh
     cg path/to/EasyFrameCommandProject
-    swift run easy-frame --root-folder path/to/parent-folder
+    swift run easy-frame path/to/parent-folder
     ```
     
 ## Example 
