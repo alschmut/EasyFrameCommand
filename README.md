@@ -3,8 +3,8 @@
 
 ![Framed Example Screenshots](example.png)
 
-## Usage instructions
-Create a directory structure according to the below example
+## Getting started
+Create a directory structure according to the below example:
 - Place your unframed raw screenshots grouped by locale into the `raw-screenshots` directory. If you use fastlane to create the unframed screenshots it will automatically create the required directory structure. Just make sure to set the `output_directory` to `raw-screenshots`
     ```ruby
     capture_ios_screenshots(
@@ -18,7 +18,7 @@ Create a directory structure according to the below example
     ```
 - Create an `EasyFrame.json` config file according to the below example. It describes each desired App Store page, the localized texts to be rendered on the resulting screenshot and a screenshot name, which should be part of the raw screenshot filename
 
-Run the local `easy-frame` CLI command via the below command:
+Run the local `easy-frame` CLI command to generate the framed screenshots into the new `parent-folder/screenshots/` directory: 
 ```sh
 cd path/to/EasyFrameCommandProject
 swift run easy-frame path/to/parent-folder
@@ -94,3 +94,7 @@ parent-folder/
     ]
 }
 ```
+
+## Acknowledgments
+
+Thanks to [FrameKit](https://github.com/ainame/FrameKit) and fastlane [frameit](https://docs.fastlane.tools/actions/frameit/), which both inspired me and made this swift package possible.
