@@ -3,6 +3,8 @@
 
 This swift package is meant to be forked and adjusted for individual use. This allows you to write your own custom App Store screenshot layout using SwiftUI.
 
+![Framed Example Screeshots](example.png)
+
 ## Usage instructions
 -   Create a directory structure according to the below example
     - Place your unframed raw screenshots grouped by locale into the `raw-screenshots` directory. If you use fastlane to create the unframed screenshots it will automatically create the required directory structure. Just make sure to set the `output_directory` to `raw-screenshots`
