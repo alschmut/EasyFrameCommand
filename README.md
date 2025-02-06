@@ -60,7 +60,7 @@ parent-folder/
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.jpg
 ```
 
-### EasyFrame.json Example
+### Example EasyFrame.json
 ```json
 {
     "pages": [
