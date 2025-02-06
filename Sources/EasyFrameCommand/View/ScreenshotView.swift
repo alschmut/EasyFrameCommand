@@ -35,7 +35,7 @@ struct ScreenshotView: View {
                             .padding(.horizontal, layout.relative(35))
                     }
                 }
-                .foregroundStyle(layout.textColor)
+                .foregroundStyle(.white)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, layout.relative(10))
                 .frame(height: titleFrameHeight)
