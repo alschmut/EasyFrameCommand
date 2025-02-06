@@ -17,8 +17,6 @@ struct PageConfig: Decodable {
 
     enum CodingKeys: CodingKey {
         case languages
-        case screenshotsSingleHero
-        case screenshotsDoubleHero
         case screenshot
     }
 
