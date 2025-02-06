@@ -151,8 +151,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     private func getFrameImage(from layout: Layout) throws -> NSImage {
-        // NSImage(resource: .appleiPhone14ProMaxBlack)
-        let url = URL(string: "file:///Users/alexander.schmutz/.fastlane/frameit/latest/\(layout.frameImagePath)")!
+        let url = Bundle.module.url(forResource: layout.frameImagePath, withExtension: nil)!
         return NSImage(contentsOf: url)!
     }
 
