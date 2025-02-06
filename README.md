@@ -25,6 +25,12 @@ This swift package is meant to be forked and adjusted for individual use. This a
     cd path/to/EasyFrameCommandProject
     swift run easy-frame path/to/parent-folder
     ```
+
+## Which devcies are supported?
+See [Sources/EasyFrameCommand/Model/SupportedDevice.swift](Sources/EasyFrameCommand/Model/SupportedDevice.swift)
+
+## Where to adjust the SwiftUI layout?
+See [Sources/EasyFrameCommand/View/ScreenshotView.swift](Sources/EasyFrameCommand/View/ScreenshotView.swift)
     
 ### Example directory structure
 ```
