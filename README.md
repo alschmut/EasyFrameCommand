@@ -30,7 +30,7 @@ See [Sources/EasyFrameCommand/Model/SupportedDevice.swift](Sources/EasyFrameComm
 ## Where to adjust the SwiftUI layout?
 See [Sources/EasyFrameCommand/View/ScreenshotView.swift](Sources/EasyFrameCommand/View/ScreenshotView.swift)
     
-### Example directory structure
+## Example directory structure
 ```
 parent-folder/
     raw-screenshots/ (the locale folders contains the unframed raw screenshots)
@@ -66,7 +66,7 @@ parent-folder/
             iPad Pro (12.9-inch) (6th generation)-3-add-entry.jpg
 ```
 
-### Example EasyFrame.json
+## Example EasyFrame.json
 ```json
 {
     "pages": [
