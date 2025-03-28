@@ -10,6 +10,7 @@ This Swift package is ideal for indie Swift developers who value:
 - **A free and open-source solution** over paid alternatives
 
 ## Getting started
+To generate screenshots like in the example above - using the implementation as-is, just follow the below steps:
 1. Set up the directory structure as shown in the example below. Place your unframed raw screenshots in the `raw-screenshots` directory, organized by locale.  
     ```
     parent-folder/
@@ -42,7 +43,7 @@ This Swift package is ideal for indie Swift developers who value:
 1. Create an `EasyFrame.json` configuration file based on the below [Example EasyFrame.json](#example-easyframejson). The config defines each App Store page with:  
     - localized texts, which will be displayed on the framed screenshot  
     - a screenshot name, which must partially match the raw screenshot filenames
-1. Run the local `easy-frame` CLI command to generate framed screenshots into the `parent-folder/screenshots/` directory:
+1. Run the local `easy-frame` swift package command to generate framed screenshots into the `parent-folder/screenshots/` directory:
     ```sh
     cd path/to/EasyFrameCommandProject
     swift run easy-frame path/to/parent-folder
