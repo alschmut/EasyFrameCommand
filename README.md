@@ -1,5 +1,5 @@
 # EasyFrameCommand
-`easy-frame` is a lightweight Swift command-line tool for generating framed App Store screenshots using a custom SwiftUI layout. Fork this Swift package to customize the SwiftUI layout and create tailored App Store screenshots that match your branding.
+`easy-frame` is a lightweight Swift command-line tool to create fully customizable framed App Store screenshots using SwiftUI. Built for automation, this open-source Swift package efficiently frames screenshots for all localizations and devices. While it follows a workflow similar to fastlane’s frameit, you are in full controll. Simply fork the reporsitory with just about 500 lines of swift code and get as creative as you desire.
 
 ![Framed Example Screenshots](example.png)
 
