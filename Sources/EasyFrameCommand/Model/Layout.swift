@@ -23,7 +23,7 @@ struct Layout {
     }
     
     /// The iPhone 14 Pro Max frame is also used for screenshots made with an iPhone 15, 16 and 17 Pro Max
-    /// The `DeviceFrameView` will show a slightly downscaled version of the screenshot
+    /// The `FramedScreenshotView` will show a slightly downscaled version of the screenshot
     static let iPhone14ProMax = Self(
         deviceImageName: "Apple iPhone 14 Pro Max Black.png",
         deviceScreenSize: .iPhone14ProMax,

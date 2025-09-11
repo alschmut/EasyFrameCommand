@@ -1,5 +1,5 @@
 //
-//  DeviceFrameView.swift
+//  FramedScreenshotView.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DeviceFrameView: View {
+struct FramedScreenshotView: View {
     let screenshotNSImage: NSImage
     let deviceNSImage: NSImage
     let deviceScreenSize: CGSize
