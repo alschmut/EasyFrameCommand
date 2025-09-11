@@ -60,12 +60,12 @@ struct EasyFrameCommand: AsyncParsableCommand {
             .filter { $0.lastPathComponent.contains(screenshot) }
         
         for screenshotURL in matchingScreenshotURLs {
-            let screenshotImage = try getNSImage(fromPath: screenshotURL.relativePath)
-            let layout = try getDeviceLayout(pixelSize: screenshotImage.pixelSize)
+            let screenshotNSImage = try getNSImage(fromPath: screenshotURL.relativePath)
+            let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
             let frameImage = try getFrameImage(from: layout)
 
             let frameViewModel = FrameViewModel(
-                screenshotImage: screenshotImage,
+                screenshotImage: screenshotNSImage,
                 frameImage: frameImage,
                 frameScreenSize: layout.frameScreenSize,
                 screenshotCornerRadius: layout.cornerRadius,
