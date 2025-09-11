@@ -1,5 +1,5 @@
 //
-//  ScreenshotView.swift
+//  ScreenshotDesignView.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScreenshotView: View {
+struct ScreenshotDesignView: View {
     let layout: Layout
     let locale: String
     let pageIndex: Int
@@ -64,7 +64,7 @@ struct ScreenshotView: View {
 }
 
 #Preview {
-    ScreenshotView(
+    ScreenshotDesignView(
         layout: SupportedDevice.iPhone14ProMax.layout,
         locale: "en-GB",
         pageIndex: 0,

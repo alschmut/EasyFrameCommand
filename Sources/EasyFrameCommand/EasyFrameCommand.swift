@@ -73,7 +73,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             )
             let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: deviceNSImage.size)
 
-            let screenshotView = ScreenshotView(
+            let screenshotDesignView = ScreenshotDesignView(
                 layout: layout,
                 locale: languageConfig.locale,
                 pageIndex: pageIndex,
@@ -81,15 +81,15 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 description: languageConfig.description,
                 framedScreenshot: framedScreenshot
             )
-            let nsImage = try getNSImage(fromView: screenshotView, size: layout.deviceScreenSize)
+            let screenshotDesignViewNSImage = try getNSImage(fromView: screenshotDesignView, size: layout.deviceScreenSize)
 
             try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
-            let fileName = screenshotURL
+            let outputFileName = screenshotURL
                 .deletingPathExtension()
                 .appendingPathExtension("jpg")
                 .lastPathComponent
-            let outputFileURL = outputFolderURL.appendingPathComponent(fileName)
-            try saveFile(nsImage: nsImage, outputPath: outputFileURL.relativePath)
+            let outputFileURL = outputFolderURL.appendingPathComponent(outputFileName)
+            try saveFile(nsImage: screenshotDesignViewNSImage, outputPath: outputFileURL.relativePath)
         }
     }
 
