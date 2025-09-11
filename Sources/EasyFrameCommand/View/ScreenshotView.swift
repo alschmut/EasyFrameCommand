@@ -52,17 +52,17 @@ struct ScreenshotView: View {
     }
 
     private var titleFrameHeight: CGFloat {
-        layout.screenshotSize.height * 0.2
+        layout.frameScreenSize.height * 0.2
     }
 
     private var screenshotFrameHeight: CGFloat {
-        layout.screenshotSize.height - titleFrameHeight
+        layout.frameScreenSize.height - titleFrameHeight
     }
 }
 
 #Preview {
     ScreenshotView(
-        layout: .iPhone15ProMax,
+        layout: .iPhone14ProMax,
         viewModel: ScreenshotViewModel(
             pageIndex: 0,
             title: "My title",

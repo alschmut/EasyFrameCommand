@@ -69,6 +69,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let frameViewModel = FrameViewModel(
                     screenshotImage: screenshotImage,
                     frameImage: frameImage,
+                    frameScreenSize: layout.frameScreenSize,
                     screenshotCornerRadius: layout.cornerRadius,
                     frameOffset: layout.deviceFrameOffset
                 )
@@ -87,7 +88,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                     viewModel: screenshotViewModel,
                     locale: language.locale
                 )
-                let nsImage = try getNSImage(fromView: screenshotView, size: layout.screenshotSize)
+                let nsImage = try getNSImage(fromView: screenshotView, size: layout.frameScreenSize)
 
                 try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
                 let fileName = screenshot
@@ -143,7 +144,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
         guard let matchingDevice = SupportedDevice.allCases.first(where: { device in
-            device.value.screenshotSize == pixelSize
+            device.value.allScreenSizes.contains(pixelSize)
         }) else {
             throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
         }

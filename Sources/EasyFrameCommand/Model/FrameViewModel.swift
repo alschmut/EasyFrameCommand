@@ -19,11 +19,12 @@ struct FrameViewModel {
     init(
         screenshotImage: NSImage,
         frameImage: NSImage,
+        frameScreenSize: CGSize,
         screenshotCornerRadius: CGFloat,
         frameOffset: CGSize
     ) {
         self.screenshotImage = Image(nsImage: screenshotImage)
-        self.screenshotSize = screenshotImage.pixelSize
+        self.screenshotSize = frameScreenSize // screenshotImage.pixelSize
         self.screenshotCornerRadius = screenshotCornerRadius
 
         self.frameImage = Image(nsImage: frameImage)
