@@ -55,13 +55,12 @@ struct EasyFrameCommand: AsyncParsableCommand {
         outputFolderURL: URL,
         screenshot: String
     ) throws {
-        let matchingScreenshotFiles = try FileManager.default
+        let matchingScreenshotURLs = try FileManager.default
             .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
-            .filter { url in
-                url.lastPathComponent.contains(screenshot)
-            }
-        for screenshot in matchingScreenshotFiles {
-            let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
+            .filter { $0.lastPathComponent.contains(screenshot) }
+        
+        for screenshotURL in matchingScreenshotURLs {
+            let screenshotImage = try getNSImage(fromPath: screenshotURL.relativePath)
             let layout = try getDeviceLayout(pixelSize: screenshotImage.pixelSize)
             let frameImage = try getFrameImage(from: layout)
 
@@ -90,7 +89,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             let nsImage = try getNSImage(fromView: screenshotView, size: layout.frameScreenSize)
 
             try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
-            let fileName = screenshot
+            let fileName = screenshotURL
                 .deletingPathExtension()
                 .appendingPathExtension("jpg")
                 .lastPathComponent
