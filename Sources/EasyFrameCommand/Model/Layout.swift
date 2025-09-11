@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Layout {
-    let frameImageName: String
+    let deviceImageName: String
     let frameScreenSize: CGSize
     var additionalScreenshotSizes: [CGSize] = []
     let deviceFrameOffset: CGSize
@@ -25,7 +25,7 @@ struct Layout {
     /// The iPhone 14 Pro Max frame is also used for screenshots made with an iPhone 15, 16 and 17 Pro Max
     /// The `DeviceFrameView` will show a slightly downscaled version of the screenshot
     static let iPhone14ProMax = Self(
-        frameImageName: "Apple iPhone 14 Pro Max Black.png",
+        deviceImageName: "Apple iPhone 14 Pro Max Black.png",
         frameScreenSize: .iPhone14ProMax,
         additionalScreenshotSizes: [
             .iPhone15ProMax,
@@ -37,14 +37,14 @@ struct Layout {
     )
 
     static let iPadPro = Self(
-        frameImageName: "Apple iPad Pro (12.9-inch) (4th generation) Space Gray.png",
+        deviceImageName: "Apple iPad Pro (12.9-inch) (4th generation) Space Gray.png",
         frameScreenSize: .iPadPro6thGen13Inch,
         deviceFrameOffset: .init(width: 2, height: 0),
         cornerRadius: 35
     )
 
     static let iPhoneSE3rdGen = Self(
-        frameImageName: "Apple iPhone SE Black.png",
+        deviceImageName: "Apple iPhone SE Black.png",
         frameScreenSize: .iPhoneSE3rdGen,
         deviceFrameOffset: .init(width: 0, height: 2),
         cornerRadius: 0

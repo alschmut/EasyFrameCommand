@@ -150,7 +150,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     private func getFrameImage(from layout: Layout) throws -> NSImage {
-        let url = Bundle.module.url(forResource: layout.frameImageName, withExtension: nil)!
+        let url = Bundle.module.url(forResource: layout.deviceImageName, withExtension: nil)!
         return NSImage(contentsOf: url)!
     }
 
