@@ -18,7 +18,7 @@ struct Layout {
         deviceScreenSize.height / 2796 * value
     }
     
-    var allScreenSizes: [CGSize] {
+    var allSupportedScreenSizes: [CGSize] {
         [deviceScreenSize] + additionalScreenshotSizes
     }
     
