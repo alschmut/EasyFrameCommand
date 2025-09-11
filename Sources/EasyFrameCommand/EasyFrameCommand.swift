@@ -64,14 +64,13 @@ struct EasyFrameCommand: AsyncParsableCommand {
             let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
             let frameImage = try getFrameImage(from: layout)
 
-            let frameViewModel = FrameViewModel(
+            let deviceFrameView = DeviceFrameView(
                 screenshotImage: screenshotNSImage,
                 frameImage: frameImage,
                 frameScreenSize: layout.deviceScreenSize,
                 screenshotCornerRadius: layout.clipCornerRadius,
                 frameOffset: layout.devicePositioningOffset
             )
-            let deviceFrameView = DeviceFrameView(viewModel: frameViewModel)
             let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
 
             let screenshotViewModel = ScreenshotViewModel(
