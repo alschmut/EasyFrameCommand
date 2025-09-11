@@ -1,5 +1,5 @@
 //
-//  DeviceFrameView.swift
+//  EasyFrameCommand.swift
 //  easy-frame
 //
 //  Created by Alexander Schmutz on 27.01.25.
