@@ -89,6 +89,13 @@ struct EasyFrameCommand: AsyncParsableCommand {
             try saveFile(nsImage: screenshotDesignViewNSImage, outputPath: outputFileURL.relativePath)
         }
     }
+    
+    private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
+        guard let layout = SupportedDevice.getFirstMatchingLayout(byPixelSize: pixelSize) else {
+            throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
+        }
+        return layout
+    }
 
     private func getFileContent<T: Decodable>(from url: URL) throws -> T {
         let data = try Data(contentsOf: url)
@@ -129,13 +136,6 @@ struct EasyFrameCommand: AsyncParsableCommand {
             throw EasyFrameError.imageOperationFailure("Error: can't generate image from view")
         }
         return nsImage
-    }
-
-    private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
-        guard let layout = SupportedDevice.getFirstMatchingLayout(byPixelSize: pixelSize) else {
-            throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
-        }
-        return layout
     }
 
     private func getBundledNSImage(fromFileName fileName: String) throws -> NSImage {
