@@ -13,7 +13,7 @@ struct ScreenshotDesignView: View {
     let pageIndex: Int
     let title: String
     let description: String
-    let framedScreenshot: NSImage
+    let framedScreenshotNSImage: NSImage
 
     var body: some View {
         ZStack {
@@ -43,7 +43,7 @@ struct ScreenshotDesignView: View {
                 .padding(.horizontal, layout.relative(10))
                 .frame(height: titleFrameHeight)
 
-                Image(nsImage: framedScreenshot)
+                Image(nsImage: framedScreenshotNSImage)
                     .resizable()
                     .scaledToFit()
                     .shadow(radius: layout.relative(20))
@@ -70,6 +70,6 @@ struct ScreenshotDesignView: View {
         pageIndex: 0,
         title: "My title",
         description: "My description",
-        framedScreenshot: NSImage()
+        framedScreenshotNSImage: NSImage()
     )
 }

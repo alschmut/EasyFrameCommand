@@ -60,14 +60,14 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
         let deviceNSImage = try getBundledNSImage(fromFileName: layout.deviceImageName)
 
-        let deviceFrameView = FramedScreenshotView(
+        let framedScreenshotView = FramedScreenshotView(
             screenshotNSImage: screenshotNSImage,
             deviceNSImage: deviceNSImage,
             deviceScreenSize: layout.deviceScreenSize,
             clipCornerRadius: layout.clipCornerRadius,
             devicePositioningOffset: layout.devicePositioningOffset
         )
-        let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: deviceNSImage.size)
+        let framedScreenshotNSImage = try getNSImage(fromView: framedScreenshotView, size: deviceNSImage.size)
 
         let screenshotDesignView = ScreenshotDesignView(
             layout: layout,
@@ -75,7 +75,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             pageIndex: pageIndex,
             title: languageConfig.title,
             description: languageConfig.description,
-            framedScreenshot: framedScreenshot
+            framedScreenshotNSImage: framedScreenshotNSImage
         )
         let screenshotDesignViewNSImage = try getNSImage(fromView: screenshotDesignView, size: layout.deviceScreenSize)
 
