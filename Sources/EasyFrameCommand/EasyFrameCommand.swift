@@ -19,14 +19,14 @@ struct EasyFrameCommand: AsyncParsableCommand {
         completion: .file()
     )
     var rootFolder: String
-
+    
     @MainActor
     mutating func run() async throws {
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
         let rawScreenshotsFolderURL = rootFolderURL.appendingPathComponent("raw-screenshots")
         let outputFolderURL = rootFolderURL.appendingPathComponent("screenshots")
         let easyFrameJsonFileURL = rawScreenshotsFolderURL.appendingPathComponent("EasyFrame.json")
-        let easyFrameConfig: EasyFrameConfig = try getFileContent(from: easyFrameJsonFileURL)
+        let easyFrameConfig: EasyFrameConfig = try FileHelper.getFileContent(from: easyFrameJsonFileURL)
 
         for (pageIndex, page) in easyFrameConfig.pages.enumerated() {
             for languagesConfig in page.languagesConfig {
@@ -56,9 +56,9 @@ struct EasyFrameCommand: AsyncParsableCommand {
         outputFolderURL: URL,
         screenshotURL: URL
     ) throws {
-        let screenshotNSImage = try getNSImage(fromDiskPath: screenshotURL.relativePath)
+        let screenshotNSImage = try FileHelper.getNSImage(fromDiskPath: screenshotURL.relativePath)
         let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
-        let deviceNSImage = try getBundledNSImage(fromFileName: layout.deviceImageName)
+        let deviceNSImage = try FileHelper.getBundledNSImage(fromFileName: layout.deviceImageName)
 
         let framedScreenshotView = FramedScreenshotView(
             screenshotNSImage: screenshotNSImage,
@@ -67,7 +67,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
             clipCornerRadius: layout.clipCornerRadius,
             devicePositioningOffset: layout.devicePositioningOffset
         )
-        let framedScreenshotNSImage = try getNSImage(fromView: framedScreenshotView, size: deviceNSImage.size)
+        let framedScreenshotNSImage = try FileHelper.getNSImage(
+            fromView: framedScreenshotView,
+            size: deviceNSImage.size
+        )
 
         let screenshotDesignView = ScreenshotDesignView(
             layout: layout,
@@ -77,7 +80,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
             description: languageConfig.description,
             framedScreenshotNSImage: framedScreenshotNSImage
         )
-        let screenshotDesignViewNSImage = try getNSImage(fromView: screenshotDesignView, size: layout.deviceScreenSize)
+        let screenshotDesignViewNSImage = try FileHelper.getNSImage(
+            fromView: screenshotDesignView,
+            size: layout.deviceScreenSize
+        )
 
         try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
         let outputFileName = screenshotURL
@@ -85,7 +91,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
             .appendingPathExtension("jpg")
             .lastPathComponent
         let outputFileURL = outputFolderURL.appendingPathComponent(outputFileName)
-        try saveFile(nsImage: screenshotDesignViewNSImage, outputPath: outputFileURL.relativePath)
+        try FileHelper.saveFile(
+            nsImage: screenshotDesignViewNSImage,
+            outputPath: outputFileURL.relativePath
+        )
     }
     
     private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
@@ -95,56 +104,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         return layout
     }
 
-    private func getFileContent<T: Decodable>(from url: URL) throws -> T {
-        let data = try Data(contentsOf: url)
-        return try JSONDecoder().decode(T.self, from: data)
-    }
-
-    private func saveFile(nsImage: NSImage, outputPath: String) throws {
-        guard let jpegData = jpegDataFrom(image: nsImage) else {
-            throw EasyFrameError.imageOperationFailure("Error: can't generate image from view")
-        }
-
-        let result = FileManager.default.createFile(atPath: outputPath, contents: jpegData)
-        guard result else {
-            throw EasyFrameError.fileSavingFailure("Error: can't save generated image at \(outputPath)")
-        }
-    }
-
-    private func jpegDataFrom(image: NSImage) -> Data? {
-        let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil)!
-        let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
-        return bitmapRep.representation(using: .jpeg, properties: [:])
-    }
-
-    private func getNSImage(fromDiskPath path: String) throws -> NSImage {
-        let absolutePath = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath).path
-        guard let deviceFrameImage = NSImage(contentsOfFile: absolutePath) else {
-            throw EasyFrameError.fileNotFound("device frame was not found at \(path)")
-        }
-        return deviceFrameImage
-    }
-
-    @MainActor
-    private func getNSImage<Content: View>(fromView view: Content, size: CGSize) throws -> NSImage {
-        let renderer = ImageRenderer(content: view)
-        renderer.proposedSize = .init(size)
-        renderer.scale = 1.0
-        guard let nsImage = renderer.nsImage else {
-            throw EasyFrameError.imageOperationFailure("Error: can't generate image from view")
-        }
-        return nsImage
-    }
-
-    private func getBundledNSImage(fromFileName fileName: String) throws -> NSImage {
-        let url = Bundle.module.url(forResource: fileName, withExtension: nil)!
-        return NSImage(contentsOf: url)!
-    }
-
     enum EasyFrameError: Error {
-        case fileNotFound(String)
-        case imageOperationFailure(String)
-        case fileSavingFailure(String)
         case deviceFrameNotSupported(String)
     }
 }
