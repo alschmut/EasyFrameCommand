@@ -53,7 +53,7 @@ To generate screenshots like in the example above - using the implementation as-
 See [Sources/EasyFrameCommand/Model/SupportedDevice.swift](Sources/EasyFrameCommand/Model/SupportedDevice.swift). The device frames have been taken from https://github.com/fastlane/frameit-frames.
 
 ## Where to adjust the SwiftUI layout?
-See [Sources/EasyFrameCommand/View/ScreenshotView.swift](Sources/EasyFrameCommand/View/ScreenshotView.swift)
+See [Sources/EasyFrameCommand/View/ScreenshotDesignView.swift](Sources/EasyFrameCommand/View/ScreenshotDesignView.swift)
     
 ## Example directory structure
 ```
