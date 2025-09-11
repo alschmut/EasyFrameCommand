@@ -33,16 +33,13 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(languagesConfig.locale)
                 let outputFolderURL = outputFolderURL.appendingPathComponent(languagesConfig.locale)
 
-                switch page.type {
-                case .default(let screenshot):
-                    try createDefaultScreenshotPage(
-                        pageIndex: pageIndex,
-                        languageConfig: languagesConfig,
-                        screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
-                        outputFolderURL: outputFolderURL,
-                        screenshot: screenshot
-                    )
-                }
+                try createDefaultScreenshotPage(
+                    pageIndex: pageIndex,
+                    languageConfig: languagesConfig,
+                    screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
+                    outputFolderURL: outputFolderURL,
+                    screenshot: page.screenshot
+                )
             }
         }
     }
