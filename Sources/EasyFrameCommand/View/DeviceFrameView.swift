@@ -12,7 +12,7 @@ struct DeviceFrameView: View {
     let frameImage: NSImage
     let deviceScreenSize: CGSize
     let clipCornerRadius: CGFloat
-    let frameOffset: CGSize
+    let devicePositioningOffset: CGSize
 
     var body: some View {
         ZStack {
@@ -24,7 +24,7 @@ struct DeviceFrameView: View {
             Image(nsImage: frameImage)
                 .resizable()
                 .frame(width: frameImage.pixelSize.width, height: frameImage.pixelSize.height)
-                .offset(frameOffset)
+                .offset(devicePositioningOffset)
         }
     }
 }
