@@ -9,25 +9,28 @@ import SwiftUI
 
 struct ScreenshotView: View {
     let layout: Layout
-    let viewModel: ScreenshotViewModel
     let locale: String
+    let pageIndex: Int
+    let title: String
+    let description: String
+    let framedScreenshot: NSImage
 
     var body: some View {
         ZStack {
-            CustomBackgroundView(pageIndex: viewModel.pageIndex)
+            CustomBackgroundView(pageIndex: pageIndex)
 
             VStack(spacing: 0) {
                 VStack(spacing: layout.relative(37)) {
                     let titleFontSize: CGFloat = 110
-                    Text(viewModel.title)
+                    Text(title)
                         .font(.system(size: layout.relative(titleFontSize)))
                         .lineSpacing(layout.relative(titleFontSize) / 7)
                         .kerning(layout.relative(titleFontSize) / 30)
                         .fontWeight(.bold)
 
-                    if !viewModel.description.isEmpty {
+                    if !description.isEmpty {
                         let descriptionFontSize: CGFloat = 75
-                        Text(viewModel.description)
+                        Text(description)
                             .font(.system(size: layout.relative(descriptionFontSize)))
                             .lineSpacing(layout.relative(descriptionFontSize) / 7)
                             .kerning(layout.relative(descriptionFontSize) / 30)
@@ -40,7 +43,7 @@ struct ScreenshotView: View {
                 .padding(.horizontal, layout.relative(10))
                 .frame(height: titleFrameHeight)
 
-                viewModel.framedScreenshots[0]
+                Image(nsImage: framedScreenshot)
                     .resizable()
                     .scaledToFit()
                     .shadow(radius: layout.relative(20))
@@ -63,12 +66,10 @@ struct ScreenshotView: View {
 #Preview {
     ScreenshotView(
         layout: .iPhone14ProMax,
-        viewModel: ScreenshotViewModel(
-            pageIndex: 0,
-            title: "My title",
-            description: "My description",
-            framedScreenshots: []
-        ),
-        locale: "en-GB"
+        locale: "en-GB",
+        pageIndex: 0,
+        title: "My title",
+        description: "My description",
+        framedScreenshot: NSImage()
     )
 }
