@@ -25,8 +25,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let rootFolderURL = URL(fileURLWithPath: rootFolder)
         let rawScreenshotsFolderURL = rootFolderURL.appendingPathComponent("raw-screenshots")
         let outputFolderURL = rootFolderURL.appendingPathComponent("screenshots")
-
-        let easyFrameConfig = try getEasyFrameConfig(rawScreenshotsFolderURL: rawScreenshotsFolderURL)
+        let easyFrameJsonFileURL = rawScreenshotsFolderURL.appendingPathComponent("EasyFrame.json")
+        let easyFrameConfig: EasyFrameConfig = try getFileContent(from: easyFrameJsonFileURL)
 
         for (pageIndex, page) in easyFrameConfig.pages.enumerated() {
             for languagesConfig in page.languagesConfig {
@@ -90,10 +90,9 @@ struct EasyFrameCommand: AsyncParsableCommand {
         }
     }
 
-    private func getEasyFrameConfig(rawScreenshotsFolderURL: URL) throws -> EasyFrameConfig {
-        let easyFrameJsonFileURL = rawScreenshotsFolderURL.appendingPathComponent("EasyFrame.json")
-        let data = try Data(contentsOf: easyFrameJsonFileURL)
-        return try JSONDecoder().decode(EasyFrameConfig.self, from: data)
+    private func getFileContent<T: Decodable>(from url: URL) throws -> T {
+        let data = try Data(contentsOf: url)
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
     private func saveFile(nsImage: NSImage, outputPath: String) throws {
