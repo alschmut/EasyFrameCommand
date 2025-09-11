@@ -28,9 +28,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
         let easyFrameConfig = try getEasyFrameConfig(rawScreenshotsFolderURL: rawScreenshotsFolderURL)
 
-        try easyFrameConfig.pages.enumerated().forEach { pageIndex, page in
-            try page.languages.forEach { language in
-
+        for (pageIndex, page) in easyFrameConfig.pages.enumerated() {
+            for language in page.languages {
                 let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(language.locale)
                 let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
 
@@ -56,48 +55,48 @@ struct EasyFrameCommand: AsyncParsableCommand {
         outputFolderURL: URL,
         screenshot: String
     ) throws {
-        try FileManager.default
+        let matchingScreenshotFiles = try FileManager.default
             .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
             .filter { url in
                 url.lastPathComponent.contains(screenshot)
             }
-            .forEach { screenshot in
-                let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
-                let layout = try getDeviceLayout(pixelSize: screenshotImage.pixelSize)
-                let frameImage = try getFrameImage(from: layout)
+        for screenshot in matchingScreenshotFiles {
+            let screenshotImage = try getNSImage(fromPath: screenshot.relativePath)
+            let layout = try getDeviceLayout(pixelSize: screenshotImage.pixelSize)
+            let frameImage = try getFrameImage(from: layout)
 
-                let frameViewModel = FrameViewModel(
-                    screenshotImage: screenshotImage,
-                    frameImage: frameImage,
-                    frameScreenSize: layout.frameScreenSize,
-                    screenshotCornerRadius: layout.cornerRadius,
-                    frameOffset: layout.deviceFrameOffset
-                )
-                let deviceFrameView = DeviceFrameView(viewModel: frameViewModel)
-                let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
+            let frameViewModel = FrameViewModel(
+                screenshotImage: screenshotImage,
+                frameImage: frameImage,
+                frameScreenSize: layout.frameScreenSize,
+                screenshotCornerRadius: layout.cornerRadius,
+                frameOffset: layout.deviceFrameOffset
+            )
+            let deviceFrameView = DeviceFrameView(viewModel: frameViewModel)
+            let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
 
-                let screenshotViewModel = ScreenshotViewModel(
-                    pageIndex: pageIndex,
-                    title: language.title,
-                    description: language.description,
-                    framedScreenshots: [framedScreenshot]
-                )
+            let screenshotViewModel = ScreenshotViewModel(
+                pageIndex: pageIndex,
+                title: language.title,
+                description: language.description,
+                framedScreenshots: [framedScreenshot]
+            )
 
-                let screenshotView = ScreenshotView(
-                    layout: layout,
-                    viewModel: screenshotViewModel,
-                    locale: language.locale
-                )
-                let nsImage = try getNSImage(fromView: screenshotView, size: layout.frameScreenSize)
+            let screenshotView = ScreenshotView(
+                layout: layout,
+                viewModel: screenshotViewModel,
+                locale: language.locale
+            )
+            let nsImage = try getNSImage(fromView: screenshotView, size: layout.frameScreenSize)
 
-                try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
-                let fileName = screenshot
-                    .deletingPathExtension()
-                    .appendingPathExtension("jpg")
-                    .lastPathComponent
-                let outputFileURL = outputFolderURL.appendingPathComponent(fileName)
-                try saveFile(nsImage: nsImage, outputPath: outputFileURL.relativePath)
-            }
+            try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
+            let fileName = screenshot
+                .deletingPathExtension()
+                .appendingPathExtension("jpg")
+                .lastPathComponent
+            let outputFileURL = outputFolderURL.appendingPathComponent(fileName)
+            try saveFile(nsImage: nsImage, outputPath: outputFileURL.relativePath)
+        }
     }
 
     private func getEasyFrameConfig(rawScreenshotsFolderURL: URL) throws -> EasyFrameConfig {
