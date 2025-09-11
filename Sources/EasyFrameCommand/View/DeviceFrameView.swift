@@ -11,7 +11,7 @@ struct DeviceFrameView: View {
     let screenshotImage: NSImage
     let frameImage: NSImage
     let deviceScreenSize: CGSize
-    let screenshotCornerRadius: CGFloat
+    let clipCornerRadius: CGFloat
     let frameOffset: CGSize
 
     var body: some View {
@@ -19,7 +19,7 @@ struct DeviceFrameView: View {
             Image(nsImage: screenshotImage)
                 .resizable()
                 .frame(width: deviceScreenSize.width, height: deviceScreenSize.height)
-                .clipShape(RoundedRectangle(cornerRadius: screenshotCornerRadius))
+                .clipShape(RoundedRectangle(cornerRadius: clipCornerRadius))
 
             Image(nsImage: frameImage)
                 .resizable()
