@@ -13,11 +13,11 @@ struct EasyFrameConfig: Decodable {
 
 struct PageConfig: Decodable {
     let languagesConfig: [LanguageConfig]
-    let screenshot: String
+    let screenshotSuffix: String
 
     enum CodingKeys: String, CodingKey {
         case languagesConfig = "languages"
-        case screenshot = "screenshot"
+        case screenshotSuffix = "screenshot"
     }
 }
 

@@ -35,7 +35,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
                 let matchingScreenshotURLs = try FileManager.default
                     .contentsOfDirectory(at: screenshotsLocaleFolderURL, includingPropertiesForKeys: nil, options: [])
-                    .filter { $0.lastPathComponent.contains(page.screenshot) }
+                    .filter { $0.lastPathComponent.contains(page.screenshotSuffix) }
                 
                 for screenshotURL in matchingScreenshotURLs {
                     try createAndSaveScreenshotDesignView(
