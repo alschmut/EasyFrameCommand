@@ -10,7 +10,7 @@ import SwiftUI
 struct DeviceFrameView: View {
     let screenshotImage: NSImage
     let frameImage: NSImage
-    let frameScreenSize: CGSize
+    let deviceScreenSize: CGSize
     let screenshotCornerRadius: CGFloat
     let frameOffset: CGSize
 
@@ -18,7 +18,7 @@ struct DeviceFrameView: View {
         ZStack {
             Image(nsImage: screenshotImage)
                 .resizable()
-                .frame(width: frameScreenSize.width, height: frameScreenSize.height)
+                .frame(width: deviceScreenSize.width, height: deviceScreenSize.height)
                 .clipShape(RoundedRectangle(cornerRadius: screenshotCornerRadius))
 
             Image(nsImage: frameImage)
