@@ -10,7 +10,7 @@ import SwiftUI
 struct Layout {
     let deviceImageName: String
     let deviceScreenSize: CGSize
-    var additionalScreenshotSizes: [CGSize] = []
+    var additionalScreenSizes: [CGSize] = []
     let devicePositioningOffset: CGSize
     let clipCornerRadius: CGFloat
 
@@ -19,7 +19,7 @@ struct Layout {
     }
     
     var allSupportedScreenSizes: [CGSize] {
-        [deviceScreenSize] + additionalScreenshotSizes
+        [deviceScreenSize] + additionalScreenSizes
     }
     
     /// The iPhone 14 Pro Max frame is also used for screenshots made with an iPhone 15, 16 and 17 Pro Max
@@ -27,7 +27,7 @@ struct Layout {
     static let iPhone14ProMax = Self(
         deviceImageName: "Apple iPhone 14 Pro Max Black.png",
         deviceScreenSize: .iPhone14ProMax,
-        additionalScreenshotSizes: [
+        additionalScreenSizes: [
             .iPhone15ProMax,
             .iPhone16ProMax,
             .iPhone17ProMax
