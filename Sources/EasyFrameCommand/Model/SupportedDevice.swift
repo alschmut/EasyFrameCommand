@@ -19,6 +19,12 @@ enum SupportedDevice: CaseIterable {
         case .iPhoneSE3rdGen: .iPhoneSE3rdGen
         }
     }
+    
+    static func getFirstMatchingLayout(byPixelSize pixelSize: CGSize) -> Layout? {
+        SupportedDevice.allCases.first(where: { device in
+            device.layout.allSupportedScreenSizes.contains(pixelSize)
+        })?.layout
+    }
 }
 
 private extension Layout {

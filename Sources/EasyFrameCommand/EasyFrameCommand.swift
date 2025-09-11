@@ -57,9 +57,9 @@ struct EasyFrameCommand: AsyncParsableCommand {
             .filter { $0.lastPathComponent.contains(screenshot) }
         
         for screenshotURL in matchingScreenshotURLs {
-            let screenshotNSImage = try getNSImage(fromPath: screenshotURL.relativePath)
+            let screenshotNSImage = try getNSImage(fromDiskPath: screenshotURL.relativePath)
             let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
-            let deviceNSImage = try getDeviceNSImage(from: layout)
+            let deviceNSImage = try getBundledNSImage(fromFileName: layout.deviceImageName)
 
             let deviceFrameView = FramedScreenshotView(
                 screenshotNSImage: screenshotNSImage,
@@ -112,7 +112,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         return bitmapRep.representation(using: .jpeg, properties: [:])
     }
 
-    private func getNSImage(fromPath path: String) throws -> NSImage {
+    private func getNSImage(fromDiskPath path: String) throws -> NSImage {
         let absolutePath = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath).path
         guard let deviceFrameImage = NSImage(contentsOfFile: absolutePath) else {
             throw EasyFrameError.fileNotFound("device frame was not found at \(path)")
@@ -132,16 +132,14 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
-        guard let matchingDevice = SupportedDevice.allCases.first(where: { device in
-            device.layout.allSupportedScreenSizes.contains(pixelSize)
-        }) else {
+        guard let layout = SupportedDevice.getFirstMatchingLayout(byPixelSize: pixelSize) else {
             throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
         }
-        return matchingDevice.layout
+        return layout
     }
 
-    private func getDeviceNSImage(from layout: Layout) throws -> NSImage {
-        let url = Bundle.module.url(forResource: layout.deviceImageName, withExtension: nil)!
+    private func getBundledNSImage(fromFileName fileName: String) throws -> NSImage {
+        let url = Bundle.module.url(forResource: fileName, withExtension: nil)!
         return NSImage(contentsOf: url)!
     }
 
