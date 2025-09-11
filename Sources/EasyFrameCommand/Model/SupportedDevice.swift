@@ -12,7 +12,7 @@ enum SupportedDevice: CaseIterable {
     case iPadPro
     case iPhoneSE3rdGen
 
-    var value: Layout {
+    var layout: Layout {
         switch self {
         case .iPhone14ProMax: .iPhone14ProMax
         case .iPadPro: .iPadPro

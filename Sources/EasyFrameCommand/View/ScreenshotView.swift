@@ -65,7 +65,7 @@ struct ScreenshotView: View {
 
 #Preview {
     ScreenshotView(
-        layout: SupportedDevice.iPhone14ProMax.value,
+        layout: SupportedDevice.iPhone14ProMax.layout,
         locale: "en-GB",
         pageIndex: 0,
         title: "My title",
