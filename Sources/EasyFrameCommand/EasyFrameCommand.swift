@@ -67,7 +67,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
             let frameViewModel = FrameViewModel(
                 screenshotImage: screenshotNSImage,
                 frameImage: frameImage,
-                frameScreenSize: layout.frameScreenSize,
+                frameScreenSize: layout.deviceScreenSize,
                 screenshotCornerRadius: layout.cornerRadius,
                 frameOffset: layout.deviceFrameOffset
             )
@@ -86,7 +86,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 viewModel: screenshotViewModel,
                 locale: language.locale
             )
-            let nsImage = try getNSImage(fromView: screenshotView, size: layout.frameScreenSize)
+            let nsImage = try getNSImage(fromView: screenshotView, size: layout.deviceScreenSize)
 
             try FileManager.default.createDirectory(at: outputFolderURL, withIntermediateDirectories: true)
             let fileName = screenshotURL

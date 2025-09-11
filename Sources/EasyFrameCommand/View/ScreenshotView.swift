@@ -52,11 +52,11 @@ struct ScreenshotView: View {
     }
 
     private var titleFrameHeight: CGFloat {
-        layout.frameScreenSize.height * 0.2
+        layout.deviceScreenSize.height * 0.2
     }
 
     private var screenshotFrameHeight: CGFloat {
-        layout.frameScreenSize.height - titleFrameHeight
+        layout.deviceScreenSize.height - titleFrameHeight
     }
 }
 
