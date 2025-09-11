@@ -62,16 +62,16 @@ struct EasyFrameCommand: AsyncParsableCommand {
         for screenshotURL in matchingScreenshotURLs {
             let screenshotNSImage = try getNSImage(fromPath: screenshotURL.relativePath)
             let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
-            let frameImage = try getFrameImage(from: layout)
+            let deviceNSImage = try getDeviceNSImage(from: layout)
 
             let deviceFrameView = DeviceFrameView(
                 screenshotImage: screenshotNSImage,
-                frameImage: frameImage,
+                deviceNSImage: deviceNSImage,
                 deviceScreenSize: layout.deviceScreenSize,
                 clipCornerRadius: layout.clipCornerRadius,
                 devicePositioningOffset: layout.devicePositioningOffset
             )
-            let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: frameImage.size)
+            let framedScreenshot = try getNSImage(fromView: deviceFrameView, size: deviceNSImage.size)
 
             let screenshotViewModel = ScreenshotViewModel(
                 pageIndex: pageIndex,
@@ -148,7 +148,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         return matchingDevice.value
     }
 
-    private func getFrameImage(from layout: Layout) throws -> NSImage {
+    private func getDeviceNSImage(from layout: Layout) throws -> NSImage {
         let url = Bundle.module.url(forResource: layout.deviceImageName, withExtension: nil)!
         return NSImage(contentsOf: url)!
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeviceFrameView: View {
     let screenshotImage: NSImage
-    let frameImage: NSImage
+    let deviceNSImage: NSImage
     let deviceScreenSize: CGSize
     let clipCornerRadius: CGFloat
     let devicePositioningOffset: CGSize
@@ -21,9 +21,9 @@ struct DeviceFrameView: View {
                 .frame(width: deviceScreenSize.width, height: deviceScreenSize.height)
                 .clipShape(RoundedRectangle(cornerRadius: clipCornerRadius))
 
-            Image(nsImage: frameImage)
+            Image(nsImage: deviceNSImage)
                 .resizable()
-                .frame(width: frameImage.pixelSize.width, height: frameImage.pixelSize.height)
+                .frame(width: deviceNSImage.pixelSize.width, height: deviceNSImage.pixelSize.height)
                 .offset(devicePositioningOffset)
         }
     }
