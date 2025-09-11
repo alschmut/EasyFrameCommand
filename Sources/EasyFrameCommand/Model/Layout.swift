@@ -11,7 +11,7 @@ struct Layout {
     let deviceImageName: String
     let deviceScreenSize: CGSize
     var additionalScreenshotSizes: [CGSize] = []
-    let deviceFrameOffset: CGSize
+    let devicePositioningOffset: CGSize
     let cornerRadius: CGFloat
 
     func relative(_ value: CGFloat) -> CGFloat {
@@ -32,21 +32,21 @@ struct Layout {
             .iPhone16ProMax,
             .iPhone17ProMax
         ],
-        deviceFrameOffset: .init(width: 0, height: 2),
+        devicePositioningOffset: .init(width: 0, height: 2),
         cornerRadius: 35
     )
 
     static let iPadPro = Self(
         deviceImageName: "Apple iPad Pro (12.9-inch) (4th generation) Space Gray.png",
         deviceScreenSize: .iPadPro6thGen13Inch,
-        deviceFrameOffset: .init(width: 2, height: 0),
+        devicePositioningOffset: .init(width: 2, height: 0),
         cornerRadius: 35
     )
 
     static let iPhoneSE3rdGen = Self(
         deviceImageName: "Apple iPhone SE Black.png",
         deviceScreenSize: .iPhoneSE3rdGen,
-        deviceFrameOffset: .init(width: 0, height: 2),
+        devicePositioningOffset: .init(width: 0, height: 2),
         cornerRadius: 0
     )
 }
