@@ -29,15 +29,15 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let easyFrameConfig = try getEasyFrameConfig(rawScreenshotsFolderURL: rawScreenshotsFolderURL)
 
         for (pageIndex, page) in easyFrameConfig.pages.enumerated() {
-            for language in page.languages {
-                let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(language.locale)
-                let outputFolderURL = outputFolderURL.appendingPathComponent(language.locale)
+            for languagesConfig in page.languagesConfig {
+                let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(languagesConfig.locale)
+                let outputFolderURL = outputFolderURL.appendingPathComponent(languagesConfig.locale)
 
                 switch page.type {
                 case .default(let screenshot):
                     try createDefaultScreenshotPage(
                         pageIndex: pageIndex,
-                        language: language,
+                        languageConfig: languagesConfig,
                         screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
                         outputFolderURL: outputFolderURL,
                         screenshot: screenshot
@@ -50,7 +50,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     @MainActor
     private func createDefaultScreenshotPage(
         pageIndex: Int,
-        language: LanguageConfig,
+        languageConfig: LanguageConfig,
         screenshotsLocaleFolderURL: URL,
         outputFolderURL: URL,
         screenshot: String
@@ -75,10 +75,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
             let screenshotView = ScreenshotView(
                 layout: layout,
-                locale: language.locale,
+                locale: languageConfig.locale,
                 pageIndex: pageIndex,
-                title: language.title,
-                description: language.description,
+                title: languageConfig.title,
+                description: languageConfig.description,
                 framedScreenshot: framedScreenshot
             )
             let nsImage = try getNSImage(fromView: screenshotView, size: layout.deviceScreenSize)

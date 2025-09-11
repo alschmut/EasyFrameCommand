@@ -12,17 +12,17 @@ struct EasyFrameConfig: Decodable {
 }
 
 struct PageConfig: Decodable {
-    let languages: [LanguageConfig]
+    let languagesConfig: [LanguageConfig]
     let type: PageType
 
-    enum CodingKeys: CodingKey {
-        case languages
-        case screenshot
+    enum CodingKeys: String, CodingKey {
+        case languages = "languages"
+        case screenshot = "screenshot"
     }
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.languages = try container.decode([LanguageConfig].self, forKey: .languages)
+        self.languagesConfig = try container.decode([LanguageConfig].self, forKey: .languages)
         if let screenshot = try? container.decode(String.self, forKey: .screenshot) {
             self.type = .default(screenshot: screenshot)
         } else {
