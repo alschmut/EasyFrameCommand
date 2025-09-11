@@ -33,7 +33,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(languagesConfig.locale)
                 let outputFolderURL = outputFolderURL.appendingPathComponent(languagesConfig.locale)
 
-                try createDefaultScreenshotPage(
+                try createAndSaveScreenshotDesignViews(
                     pageIndex: pageIndex,
                     languageConfig: languagesConfig,
                     screenshotsLocaleFolderURL: screenshotsLocaleFolderURL,
@@ -45,7 +45,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
     }
 
     @MainActor
-    private func createDefaultScreenshotPage(
+    private func createAndSaveScreenshotDesignViews(
         pageIndex: Int,
         languageConfig: LanguageConfig,
         screenshotsLocaleFolderURL: URL,
