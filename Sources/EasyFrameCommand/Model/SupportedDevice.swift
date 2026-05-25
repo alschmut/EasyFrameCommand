@@ -46,6 +46,9 @@ private extension Layout {
     static let iPadPro = Self(
         deviceImageName: "Apple iPad Pro (12.9-inch) (4th generation) Space Gray.png",
         deviceScreenSize: .iPadPro6thGen13Inch,
+        additionalScreenSizes: [
+            .iPadPro13Inch
+        ],
         devicePositioningOffset: .init(width: 2, height: 0),
         clipCornerRadius: 35
     )
@@ -64,5 +67,6 @@ private extension CGSize {
     static let iPhone15ProMax = CGSize(width: 1290, height: 2796)
     static let iPhone14ProMax = CGSize(width: 1290, height: 2796)
     static let iPadPro6thGen13Inch = CGSize(width: 2048, height: 2732)
+    static let iPadPro13Inch = CGSize(width: 2064, height: 2752)
     static let iPhoneSE3rdGen = CGSize(width: 750, height: 1334)
 }
