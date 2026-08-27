@@ -69,7 +69,10 @@ struct EasyFrameCommand: AsyncParsableCommand {
         )
         let framedScreenshotNSImage = try FileHelper.getNSImage(
             fromView: framedScreenshotView,
-            size: deviceNSImage.size
+            // `pixelSize`, not `size`: `NSImage.size` is in points, derived from the file's DPI, and
+            // `FramedScreenshotView` lays the bezel out at its pixel size. The two agree only for
+            // 72 dpi art.
+            size: deviceNSImage.pixelSize
         )
 
         let screenshotDesignView = ScreenshotDesignView(
