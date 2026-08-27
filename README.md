@@ -50,7 +50,72 @@ To generate screenshots like in the example above - using the implementation as-
     ```
 
 ## Which devices are supported?
-See [Sources/EasyFrameCommand/Model/SupportedDevice.swift](Sources/EasyFrameCommand/Model/SupportedDevice.swift). The device frames have been taken from https://github.com/fastlane/frameit-frames.
+All five platforms an App Store listing can need. See [Sources/EasyFrameCommand/Model/SupportedDevice.swift](Sources/EasyFrameCommand/Model/SupportedDevice.swift) for the declarations.
+
+| Layout | Frame art | Store slot | Notes |
+| --- | --- | --- | --- |
+| `iPhone17ProMax` | Apple | 1320 x 2868 | Silver, portrait |
+| `iPadPro13M5` | Apple | 2064 x 2752 | Space Black, portrait |
+| `macBookPro14` | Apple | 2880 x 1800 | Captures a 3024 x 1964 window, see below |
+| `appleTV4K` | Apple | 3840 x 2160 | Cut-out is **not** centred in the art |
+| `visionPro` | *none* | 3840 x 2160 | Deliberately frameless, see below |
+| `iPhone14ProMax` | frameit-frames | 1290 x 2796 | Also serves 15/16/17 Pro Max, downscaled |
+| `iPadPro` | frameit-frames | 2048 x 2732 | Also serves the 13-inch iPad Pro, downscaled |
+| `iPhoneSE3rdGen` | frameit-frames | 750 x 1334 | |
+
+Two of those rows need a sentence:
+
+- **Vision Pro is frameless on purpose.** Apple publishes no Vision Pro product bezel, and that is not
+  a gap to work around: a visionOS listing conventionally shows the capture itself, because the
+  platform's content floats in a room rather than sitting in a device. A layout with
+  `deviceImageName: nil` renders its capture as a rounded, shadowed card under a taller caption band.
+- **The Mac's page is not its capture's size.** A desktop capture is a *window*, and the window that
+  fills the MacBook cut-out exactly is 3024 x 1964 — which is not one of the four sizes App Store
+  Connect accepts for a Mac page. So `deviceScreenSize` is the 2880 x 1800 slot the page is rendered
+  at, and the capture's own size rides in `additionalScreenSizes`.
+
+The frames marked **Apple** are four PNGs published by Apple, committed to `Sources/Resources/` and
+refreshed by `scripts/fetch-device-bezels.sh`. **They arrive under two different Apple licences and
+[BEZELS.md](BEZELS.md) is required reading before you use, move or add to them** — in short, the
+artwork is licensed for mock-ups of Apple-platform software, may not be embedded in a software
+program, and anyone you hand work made with it has to be made aware of the restrictions. This
+repository's MIT licence does not extend to those files.
+
+The rest are from https://github.com/fastlane/frameit-frames.
+
+## How does a screenshot find its frame?
+By pixel size, and then — if you ask for it — by name.
+
+`getFirstMatchingLayout(byPixelSize:)` is the original rule and still the fallback: a capture matches
+the layout whose `deviceScreenSize` or `additionalScreenSizes` contains its pixel size. That is enough
+for most devices and needs no configuration at all.
+
+It is not enough for every device. **Apple TV and Vision Pro both capture at exactly 3840 x 2160**,
+and they want opposite treatments — a television bezel against no bezel at all. So a layout can also
+declare `deviceNameMatches`, which is tried first:
+
+```swift
+static let appleTV4K = Self(
+    deviceImageName: "Apple TV - 4K.png",
+    deviceScreenSize: .appleTVStore,
+    deviceNameMatches: ["appletv", "apple tv", "apple tv 4k"],
+    ...
+)
+```
+
+Those aliases are compared **case-insensitively for equality** against the capture file name's
+*device segment* — everything before its first `-`. So `AppleTV-1-home.png` matches and
+`Apple TV 4K (3rd generation)-1-home.png` matches too, because that exact string is in the list.
+
+The equality is deliberate, and it is what keeps this backwards-compatible. A `fastlane snapshot`
+file is named `iPhone 14 Pro Max-1-home.png`; had the aliases been matched as *substrings*, any
+layout claiming `"iphone"` would have quietly taken over every existing iPhone screenshot in every
+existing project. Under equality such a name matches nothing, falls through to the size lookup, and
+resolves exactly as it always did. **Name matching is opt-in**: name a capture's device segment for
+the layout you want, or say nothing and keep the behaviour you have.
+
+To add a device of your own, give its layout the names you actually write. If your capture script
+produces `Watch-1-home.png`, `deviceNameMatches: ["watch"]` is the whole of it.
 
 ## Where to adjust the SwiftUI layout?
 See [Sources/EasyFrameCommand/View/ScreenshotDesignView.swift](Sources/EasyFrameCommand/View/ScreenshotDesignView.swift)

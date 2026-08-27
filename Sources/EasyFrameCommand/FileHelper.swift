@@ -50,9 +50,25 @@ struct FileHelper {
         return nsImage
     }
 
+    /// The URL of a bundled bezel render, or `nil`.
+    ///
+    /// Split out of `getBundledNSImage` so a layout's art can be *checked* without loading it —
+    /// see `LayoutTests.bundledArtResolves`.
+    static func bundledURL(forFileName fileName: String) -> URL? {
+        Bundle.module.url(forResource: fileName, withExtension: nil)
+    }
+
     static func getBundledNSImage(fromFileName fileName: String) throws -> NSImage {
-        let url = Bundle.module.url(forResource: fileName, withExtension: nil)!
-        return NSImage(contentsOf: url)!
+        // Both of these were force-unwraps. A layout naming art that is not in the bundle is a
+        // one-character mistake, and a crash in the middle of a framing run says far less about it
+        // than the file name does.
+        guard let url = bundledURL(forFileName: fileName) else {
+            throw EasyFrameError.fileNotFound("no bundled device frame named \(fileName)")
+        }
+        guard let image = NSImage(contentsOf: url) else {
+            throw EasyFrameError.imageOperationFailure("bundled device frame \(fileName) is unreadable")
+        }
+        return image
     }
 
     enum EasyFrameError: Error {

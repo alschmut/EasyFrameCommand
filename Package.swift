@@ -16,6 +16,10 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "EasyFrameTests",
+            dependencies: ["easy-frame"]
         )
     ],
     swiftLanguageModes: [.v5]
