@@ -57,23 +57,40 @@ struct EasyFrameCommand: AsyncParsableCommand {
         screenshotURL: URL
     ) throws {
         let screenshotNSImage = try FileHelper.getNSImage(fromDiskPath: screenshotURL.relativePath)
-        let layout = try getDeviceLayout(pixelSize: screenshotNSImage.pixelSize)
-        let deviceNSImage = try FileHelper.getBundledNSImage(fromFileName: layout.deviceImageName)
+        let outputName = screenshotURL.deletingPathExtension().lastPathComponent
+        // The **device segment** only — everything before the first `-` — so a page suffix that
+        // happens to read like a device name cannot select a layout.
+        let deviceName = outputName.components(separatedBy: "-").first ?? ""
+        let layout = try getDeviceLayout(deviceName: deviceName, pixelSize: screenshotNSImage.pixelSize)
 
-        let framedScreenshotView = FramedScreenshotView(
-            screenshotNSImage: screenshotNSImage,
-            deviceNSImage: deviceNSImage,
-            deviceScreenSize: layout.deviceScreenSize,
-            clipCornerRadius: layout.clipCornerRadius,
-            devicePositioningOffset: layout.devicePositioningOffset
-        )
-        let framedScreenshotNSImage = try FileHelper.getNSImage(
-            fromView: framedScreenshotView,
-            // `pixelSize`, not `size`: `NSImage.size` is in points, derived from the file's DPI, and
-            // `FramedScreenshotView` lays the bezel out at its pixel size. The two agree only for
-            // 72 dpi art.
-            size: deviceNSImage.pixelSize
-        )
+        // Taken after the layout is chosen and before anything is composited: the canvas is the
+        // layout's store slot, and the crop decides what fills it rather than how big it is.
+        let capturedNSImage = layout.captureCrop.map { screenshotNSImage.cropped(to: $0) }
+            ?? screenshotNSImage
+
+        let framedScreenshotNSImage: NSImage
+        if let deviceImageName = layout.deviceImageName {
+            let deviceNSImage = try FileHelper.getBundledNSImage(fromFileName: deviceImageName)
+            let framedScreenshotView = FramedScreenshotView(
+                screenshotNSImage: capturedNSImage,
+                deviceNSImage: deviceNSImage,
+                deviceScreenSize: layout.deviceScreenSize,
+                clipCornerRadius: layout.clipCornerRadius,
+                devicePositioningOffset: layout.devicePositioningOffset,
+                screenFrame: layout.screenFrame
+            )
+            framedScreenshotNSImage = try FileHelper.getNSImage(
+                fromView: framedScreenshotView,
+                // `pixelSize`, not `size`: `NSImage.size` is in points, derived from the file's DPI,
+                // and `FramedScreenshotView` lays the bezel out at its pixel size. The two agree only
+                // for 72 dpi art.
+                size: deviceNSImage.pixelSize
+            )
+        } else {
+            // Frameless. There is no bezel to composite, so the capture goes straight to the page,
+            // which renders it as a card.
+            framedScreenshotNSImage = capturedNSImage
+        }
 
         let screenshotDesignView = ScreenshotDesignView(
             layout: layout,
@@ -81,7 +98,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
             pageIndex: pageIndex,
             title: languageConfig.title,
             description: languageConfig.description,
-            framedScreenshotNSImage: framedScreenshotNSImage
+            framedScreenshotNSImage: framedScreenshotNSImage,
+            rendersAsCard: layout.isFrameless
         )
         let screenshotDesignViewNSImage = try FileHelper.getNSImage(
             fromView: screenshotDesignView,
@@ -100,9 +118,20 @@ struct EasyFrameCommand: AsyncParsableCommand {
         )
     }
     
-    private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
+    /// The frame for a capture: by device name if the name says which one, otherwise by pixel size.
+    ///
+    /// The name has to be tried first, because some devices cannot be told apart by size at all —
+    /// Apple TV and Vision Pro both capture at exactly 3840 x 2160. Only a layout that declares
+    /// `deviceNameMatches` is reachable that way, so a capture named the way `fastlane snapshot`
+    /// names one goes on resolving by size exactly as before.
+    private func getDeviceLayout(deviceName: String, pixelSize: CGSize) throws -> Layout {
+        if let layout = SupportedDevice.layout(forDeviceName: deviceName) {
+            return layout
+        }
         guard let layout = SupportedDevice.getFirstMatchingLayout(byPixelSize: pixelSize) else {
-            throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
+            throw EasyFrameError.deviceFrameNotSupported(
+                "No matching device frame found for '\(deviceName)' at pixelSize \(pixelSize)"
+            )
         }
         return layout
     }

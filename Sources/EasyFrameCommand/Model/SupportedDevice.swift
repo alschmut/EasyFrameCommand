@@ -25,6 +25,20 @@ enum SupportedDevice: CaseIterable {
             device.layout.allSupportedScreenSizes.contains(pixelSize)
         })?.layout
     }
+
+    /// The layout whose `deviceNameMatches` names this capture's device segment — the part of the
+    /// file name before its first `-`.
+    ///
+    /// Tried before `getFirstMatchingLayout(byPixelSize:)`, because some devices cannot be told
+    /// apart by size at all: Apple TV and Vision Pro both capture at exactly 3840 x 2160. A layout
+    /// that declares no aliases is unreachable this way and keeps the size lookup it always had,
+    /// which is what stops a new layout quietly taking over an old one's screenshots.
+    static func layout(forDeviceName name: String) -> Layout? {
+        let needle = name.lowercased()
+        return allCases.first { device in
+            device.layout.deviceNameMatches.contains { $0.lowercased() == needle }
+        }?.layout
+    }
 }
 
 private extension Layout {
