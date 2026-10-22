@@ -12,7 +12,7 @@ struct ScreenshotDesignView: View {
     let locale: String
     let pageIndex: Int
     let title: String
-    let description: String
+    let description: String?
     let framedScreenshotNSImage: NSImage
 
     var body: some View {
@@ -28,7 +28,7 @@ struct ScreenshotDesignView: View {
                         .kerning(layout.relative(titleFontSize) / 30)
                         .fontWeight(.bold)
 
-                    if !description.isEmpty {
+                    if let description, !description.isEmpty {
                         let descriptionFontSize: CGFloat = 75
                         Text(description)
                             .font(.system(size: layout.relative(descriptionFontSize)))
