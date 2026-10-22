@@ -10,7 +10,7 @@ This Swift package is ideal for indie Swift developers who value:
 - **A free and open-source solution** over paid alternatives
 
 ## Getting started
-To generate screenshots like in the example above - using the implementation as-is, just follow the below steps:
+To generate screenshots like in the example above, just follow the below steps:
 1. Set up the directory structure as shown in the example below. Place your unframed raw screenshots in the `raw-screenshots` directory, organized by locale.  
     ```
     parent-folder/
@@ -43,6 +43,9 @@ To generate screenshots like in the example above - using the implementation as-
 1. Create an `EasyFrame.json` configuration file based on the below [Example EasyFrame.json](#example-easyframejson). The config defines each App Store page with:  
     - localized texts, which will be displayed on the framed screenshot  
     - a screenshot name, which must partially match the raw screenshot filenames
+    - an optional `pageBackgroundId`, which references one of the reusable `pageBackgrounds` (defaults to a light gray gradient). Colors are hex (`#RGB`, `#RGBA`, `#RRGGBB` or `#RRGGBBAA`):
+        - `gradient`: top to bottom, a single color results in a solid background
+        - `mesh`: a 3x3 mesh gradient with exactly 9 colors from top left to bottom right
 1. Run the local `easy-frame` swift package command to generate framed screenshots into the `parent-folder/screenshots/` directory:
     ```sh
     cd path/to/EasyFrameCommandProject
@@ -94,27 +97,42 @@ parent-folder/
 ## Example EasyFrame.json
 ```json
 {
+    "pageBackgrounds": [
+        {
+            "id": "sunset",
+            "type": "mesh",
+            "hexColors": [
+                "#AF52DE", "#AF52DE", "#1E557D",
+                "#FB8500", "#FB8500", "#AF52DE",
+                "#FB8500", "#FB8500", "#FB8500"
+            ]
+        },
+        { "id": "ocean", "type": "gradient", "hexColors": ["#1E557D", "#AF52DE"] }
+    ],
     "pages": [
         {
             "languages": [
                 { "locale": "en-GB", "title": "Title 1 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 1 DE", "description": "Description" }
             ],
-            "screenshot": "1-calendar"
+            "screenshot": "1-calendar",
+            "pageBackgroundId": "sunset"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Title 2 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 2 DE", "description": "Description" }
             ],
-            "screenshot": "2-list"
+            "screenshot": "2-list",
+            "pageBackgroundId": "ocean"
         },
         {
             "languages": [
                 { "locale": "en-GB", "title": "Title 3 EN", "description": "Description" },
                 { "locale": "de-DE", "title": "Title 3 DE", "description": "Description" }
             ],
-            "screenshot": "3-add-entry"
+            "screenshot": "3-add-entry",
+            "pageBackgroundId": "sunset"
         }
     ]
 }

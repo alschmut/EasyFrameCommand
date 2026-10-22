@@ -28,7 +28,8 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let easyFrameJsonFileURL = rawScreenshotsFolderURL.appendingPathComponent("EasyFrame.json")
         let easyFrameConfig: EasyFrameConfig = try FileHelper.getFileContent(from: easyFrameJsonFileURL)
 
-        for (pageIndex, page) in easyFrameConfig.pages.enumerated() {
+        for page in easyFrameConfig.pages {
+            let pageBackground = try getPageBackground(id: page.pageBackgroundId, from: easyFrameConfig.pageBackgrounds)
             for languagesConfig in page.languagesConfig {
                 let screenshotsLocaleFolderURL = rawScreenshotsFolderURL.appendingPathComponent(languagesConfig.locale)
                 let outputFolderURL = outputFolderURL.appendingPathComponent(languagesConfig.locale)
@@ -39,7 +40,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
                 
                 for screenshotURL in matchingScreenshotURLs {
                     try createAndSaveScreenshotDesignView(
-                        pageIndex: pageIndex,
+                        pageBackground: pageBackground,
                         languageConfig: languagesConfig,
                         outputFolderURL: outputFolderURL,
                         screenshotURL: screenshotURL
@@ -51,7 +52,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     @MainActor
     private func createAndSaveScreenshotDesignView(
-        pageIndex: Int,
+        pageBackground: PageBackgroundConfig,
         languageConfig: LanguageConfig,
         outputFolderURL: URL,
         screenshotURL: URL
@@ -75,7 +76,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
         let screenshotDesignView = ScreenshotDesignView(
             layout: layout,
             locale: languageConfig.locale,
-            pageIndex: pageIndex,
+            pageBackground: pageBackground,
             title: languageConfig.title,
             description: languageConfig.description,
             framedScreenshotNSImage: framedScreenshotNSImage
@@ -97,6 +98,22 @@ struct EasyFrameCommand: AsyncParsableCommand {
         )
     }
     
+    private func getPageBackground(id: String?, from pageBackgrounds: [PageBackgroundConfig]?) throws -> PageBackgroundConfig {
+        guard let id else {
+            return .defaultGradient
+        }
+        guard let pageBackground = pageBackgrounds?.first(where: { $0.id == id }) else {
+            throw EasyFrameError.pageBackgroundNotFound("No pageBackgrounds entry found with id \"\(id)\"")
+        }
+        guard pageBackground.colors.count == pageBackground.hexColors.count else {
+            throw EasyFrameError.invalidPageBackground("Page background \"\(id)\" contains an invalid hex color")
+        }
+        guard pageBackground.isValidColorCount else {
+            throw EasyFrameError.invalidPageBackground("Page background \"\(id)\" of type \(pageBackground.type) requires \(pageBackground.type == .mesh ? "exactly 9 colors" : "at least 1 color")")
+        }
+        return pageBackground
+    }
+
     private func getDeviceLayout(pixelSize: CGSize) throws -> Layout {
         guard let layout = SupportedDevice.getFirstMatchingLayout(byPixelSize: pixelSize) else {
             throw EasyFrameError.deviceFrameNotSupported("No matching device frame found for pixelSize \(pixelSize)")
@@ -106,5 +123,7 @@ struct EasyFrameCommand: AsyncParsableCommand {
 
     enum EasyFrameError: Error {
         case deviceFrameNotSupported(String)
+        case pageBackgroundNotFound(String)
+        case invalidPageBackground(String)
     }
 }

@@ -10,14 +10,14 @@ import SwiftUI
 struct ScreenshotDesignView: View {
     let layout: Layout
     let locale: String
-    let pageIndex: Int
+    let pageBackground: PageBackgroundConfig
     let title: String
     let description: String?
     let framedScreenshotNSImage: NSImage
 
     var body: some View {
         ZStack {
-            CustomBackgroundView(pageIndex: pageIndex)
+            PageBackgroundView(pageBackground: pageBackground)
 
             VStack(spacing: 0) {
                 VStack(spacing: layout.relative(37)) {
@@ -67,7 +67,7 @@ struct ScreenshotDesignView: View {
     ScreenshotDesignView(
         layout: SupportedDevice.iPhone14ProMax.layout,
         locale: "en-GB",
-        pageIndex: 0,
+        pageBackground: .defaultGradient,
         title: "My title",
         description: "My description",
         framedScreenshotNSImage: NSImage()
