@@ -7,5 +7,6 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 
-# Symlinked from ../EasySkills
 .claude/skills/easy-*
+.claude/GUIDELINES.md
+.claude/settings.local.json
